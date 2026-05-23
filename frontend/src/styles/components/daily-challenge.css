@@ -1,0 +1,37 @@
+.daily-challenge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-warning-light);
+  border: 1px solid var(--color-warning);
+  border-radius: var(--radius-lg);
+  transition: opacity var(--transition-base);
+}
+
+.daily-challenge--claimed {
+  background-color: var(--color-success-light);
+  border-color: var(--color-success);
+  opacity: 0.75;
+}
+
+.daily-challenge-icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.daily-challenge-body {
+  flex: 1;
+}
+
+.daily-challenge-title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.daily-challenge-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
