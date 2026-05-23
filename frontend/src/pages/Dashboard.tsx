@@ -7,6 +7,7 @@ import { subjectsAPI } from "@/api/subjects.api";
 import { progressAPI } from "@/api/progress.api";
 import { formatXP, formatDate } from "@/utils/formatters";
 import { xpProgressPercent, xpToNextLevel } from "@/utils/xp";
+import DailyChallenge from '@/components/gamification/DailyChallenge'
 import XPBar from "@/components/gamification/XPBar";
 import SkeletonCard from "@/components/shared/SkeletonCard";
 import "@/styles/pages/dashboard.css";
@@ -66,7 +67,11 @@ export default function Dashboard() {
             <div className="dash-streak-label">day streak</div>
           </div>
         </div>
-
+        // Add this block directly below the dash-welcome section, before
+        dash-stats:
+        <div style={{ marginBottom: "var(--space-6)" }}>
+          <DailyChallenge />
+        </div>
         {/* Stats row */}
         <div className="dash-stats">
           <div className="dash-stat-card card">
@@ -92,7 +97,6 @@ export default function Dashboard() {
             <div className="dash-stat-label">Achievements</div>
           </div>
         </div>
-
         {/* XP progress */}
         <div className="dash-section">
           <h2 className="dash-section-title">Level progress</h2>
@@ -100,7 +104,6 @@ export default function Dashboard() {
             <XPBar />
           </div>
         </div>
-
         {/* Overall progress */}
         <div className="dash-section">
           <h2 className="dash-section-title">Overall curriculum progress</h2>
@@ -119,7 +122,6 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
         {/* Subject progress */}
         <div className="dash-section">
           <h2 className="dash-section-title">Progress by subject</h2>
@@ -166,7 +168,6 @@ export default function Dashboard() {
             </div>
           )}
         </div>
-
         {/* Recent achievements */}
         {achievements.length > 0 && (
           <div className="dash-section">
