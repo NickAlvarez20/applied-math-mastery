@@ -1,118 +1,109 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useProgressStore } from "@/store/progressStore";
-import { useUIStore } from "@/store/uiStore";
+import { useExercise } from "@/hooks/useExercise";
+import { useProgress } from "@/hooks/useProgress";
 import { subjectsAPI } from "@/api/subjects.api";
-import { progressAPI } from "@/api/progress.api";
-import { xpForDifficulty } from "@/utils/xp";
 import XPBar from "@/components/gamification/XPBar";
+import MasteryBadge from "@/components/gamification/MasteryBadge";
+import MultipleChoiceExercise from "@/components/learning/MultipleChoiceExercise";
+import ConceptVisual from "@/components/learning/ConceptVisual";
 import type { Topic } from "@/types/subject.types";
 import "@/styles/pages/forge-mode.css";
 
-type QuizState = "question" | "correct" | "wrong" | "complete";
-
-// Sample exercises rendered until the backend exercise endpoint is wired
-const sampleQuestions = (topic: Topic) => [
-  {
-    id: "q1",
-    question: `Which of the following best describes a key concept in ${topic.name}?`,
-    options: [
-      topic.concepts[0]?.title ?? "Option A",
-      "A completely unrelated concept",
-      "An intentionally wrong answer",
-      topic.concepts[1]?.title ?? "Option D",
-    ],
-    answer: "0",
-    explanation:
-      topic.concepts[0]?.explanation ??
-      "The first concept is the correct answer.",
-    xpReward: xpForDifficulty(topic.difficulty as 1),
-  },
-  {
-    id: "q2",
-    question: `What is the most common mistake students make when learning ${topic.name}?`,
-    options: [
-      topic.pitfalls[0]?.description ?? "Skipping practice",
-      "Practising too much",
-      "Reading the textbook",
-      "Asking for help",
-    ],
-    answer: "0",
-    explanation:
-      topic.pitfalls[0]?.fixStrategy ?? "This is the most common pitfall.",
-    xpReward: xpForDifficulty(topic.difficulty as 1),
-  },
-];
+type ForgePhase = "concept" | "exercise" | "complete";
 
 export default function ForgeMode() {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
-  const { addXP, markTopicDone } = useProgressStore();
-  const { addToast } = useUIStore();
 
   const [topic, setTopic] = useState<Topic | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [qIndex, setQIndex] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
-  const [quizState, setQuizState] = useState<QuizState>("question");
+  const [topicLoading, setTopicLoading] = useState(true);
+  const [phase, setPhase] = useState<ForgePhase>("concept");
+  const [conceptIdx, setConceptIdx] = useState(0);
   const [totalXP, setTotalXP] = useState(0);
-  const [score, setScore] = useState(0); // correct count
+  const [correct, setCorrect] = useState(0);
+  const [attempted, setAttempted] = useState(0);
 
+  const {
+    exercise,
+    result,
+    mastery,
+    loading,
+    submitting,
+    error,
+    fetchNext,
+    submit,
+    reset,
+  } = useExercise();
+  const { completeTopicWithSync } = useProgress();
+
+  // Load topic metadata
   useEffect(() => {
     if (!topicId) return;
     subjectsAPI
       .getTopic(topicId)
       .then((res) => setTopic(res.data.data))
-      .finally(() => setLoading(false));
+      .finally(() => setTopicLoading(false));
   }, [topicId]);
 
-  if (loading || !topic)
+  // When entering exercise phase, fetch the first adaptive exercise
+  useEffect(() => {
+    if (phase === "exercise" && !exercise && topicId) {
+      fetchNext(topicId);
+    }
+  }, [phase, topicId]);
+
+  function handleConceptNext() {
+    if (!topic) return;
+    if (conceptIdx < topic.concepts.length - 1) {
+      setConceptIdx((i) => i + 1);
+    } else {
+      setPhase("exercise");
+    }
+  }
+
+  async function handleSubmitAnswer(answer: string) {
+    await submit(answer);
+  }
+
+  function handleExerciseNext() {
+    if (!result) return;
+    const newCorrect = correct + (result.correct ? 1 : 0);
+    const newAttempted = attempted + 1;
+    const newXP = totalXP + result.xpEarned;
+    setCorrect(newCorrect);
+    setAttempted(newAttempted);
+    setTotalXP(newXP);
+
+    // After 3 exercises, finish the topic
+    if (newAttempted >= 3) {
+      const score = Math.round((newCorrect / newAttempted) * 100);
+      completeTopicWithSync(topicId!, score, newXP);
+      setPhase("complete");
+    } else {
+      reset();
+      fetchNext(topicId!);
+    }
+  }
+
+  if (topicLoading || !topic) {
     return (
       <div className="forge-loading">
         <div className="forge-loading-spinner" />
         <p>Loading Forge Mode…</p>
       </div>
     );
-
-  const questions = sampleQuestions(topic);
-  const current = questions[qIndex];
-  const isLast = qIndex === questions.length - 1;
-
-  function handleSelect(idx: number) {
-    if (quizState !== "question") return;
-    setSelected(idx);
-    const correct = String(idx) === current.answer;
-    if (correct) {
-      setQuizState("correct");
-      setScore((s) => s + 1);
-      addXP(current.xpReward);
-      setTotalXP((t) => t + current.xpReward);
-    } else {
-      setQuizState("wrong");
-    }
   }
 
-  function handleNext() {
-    if (isLast) {
-      const finalScore = Math.round(
-        ((score + (quizState === "correct" ? 0 : 0)) / questions.length) * 100,
-      );
-      markTopicDone(topicId!, finalScore);
-      progressAPI.submitAnswer(topicId!, finalScore, totalXP).catch(() => {});
-      addToast(`Topic complete! +${totalXP} XP earned`, "success");
-      setQuizState("complete");
-    } else {
-      setQIndex((i) => i + 1);
-      setSelected(null);
-      setQuizState("question");
-    }
-  }
-
-  if (quizState === "complete") {
+  // ── Complete screen ───────────────────────────────────────────────────────
+  if (phase === "complete") {
+    const score = Math.round((correct / attempted) * 100);
     return (
       <div className="forge-complete">
         <div className="forge-complete-card">
-          <div className="forge-complete-icon">🏆</div>
+          <div className="forge-complete-icon">
+            {score >= 80 ? "🏆" : score >= 60 ? "⭐" : "📚"}
+          </div>
           <h1>Topic complete!</h1>
           <p className="forge-complete-subtitle">
             You earned <strong>{totalXP} XP</strong> on {topic.name}
@@ -120,15 +111,30 @@ export default function ForgeMode() {
           <div className="forge-complete-stats">
             <div className="forge-stat">
               <span className="forge-stat-value">
-                {score}/{questions.length}
+                {correct}/{attempted}
               </span>
               <span className="forge-stat-label">Correct</span>
+            </div>
+            <div className="forge-stat">
+              <span className="forge-stat-value">{score}%</span>
+              <span className="forge-stat-label">Score</span>
             </div>
             <div className="forge-stat">
               <span className="forge-stat-value">+{totalXP}</span>
               <span className="forge-stat-label">XP earned</span>
             </div>
           </div>
+          <MasteryBadge
+            band={
+              score >= 90
+                ? "mastered"
+                : score >= 70
+                  ? "proficient"
+                  : score >= 40
+                    ? "developing"
+                    : "novice"
+            }
+          />
           <div className="forge-complete-actions">
             <button
               className="btn btn-primary"
@@ -148,9 +154,14 @@ export default function ForgeMode() {
     );
   }
 
+  // ── Header (shared) ───────────────────────────────────────────────────────
+  const conceptCount = topic.concepts.length;
+  const totalSteps = conceptCount + 3; // concepts + 3 exercises
+  const currentStep =
+    phase === "concept" ? conceptIdx : conceptCount + attempted;
+
   return (
     <div className="forge-mode">
-      {/* Header */}
       <div className="forge-header">
         <button
           className="btn btn-ghost btn-sm"
@@ -159,83 +170,104 @@ export default function ForgeMode() {
           ✕ Exit
         </button>
         <div className="forge-progress-dots">
-          {questions.map((_, i) => (
+          {Array.from({ length: totalSteps }).map((_, i) => (
             <div
               key={i}
-              className={`forge-dot ${i < qIndex ? "forge-dot--done" : i === qIndex ? "forge-dot--active" : ""}`}
+              className={`forge-dot ${
+                i < currentStep
+                  ? "forge-dot--done"
+                  : i === currentStep
+                    ? "forge-dot--active"
+                    : ""
+              }`}
             />
           ))}
         </div>
-        <div className="forge-xp-counter">+{totalXP} XP</div>
+        <MasteryBadge band={mastery} size="sm" />
       </div>
 
-      {/* XP bar */}
       <div className="forge-xpbar">
         <XPBar />
       </div>
 
-      {/* Question card */}
       <div className="forge-body">
         <div className="forge-card">
-          <div className="forge-q-meta">
-            Question {qIndex + 1} of {questions.length}
-          </div>
-          <h2 className="forge-question">{current.question}</h2>
-
-          <div className="forge-options">
-            {current.options.map((opt, i) => {
-              const isSelected = selected === i;
-              const isCorrect = String(i) === current.answer;
-              let cls = "forge-option";
-              if (quizState !== "question") {
-                if (isCorrect) cls += " forge-option--correct";
-                else if (isSelected) cls += " forge-option--wrong";
-                else cls += " forge-option--dim";
-              }
-              if (isSelected && quizState === "question")
-                cls += " forge-option--selected";
-              return (
-                <button
-                  key={i}
-                  className={cls}
-                  onClick={() => handleSelect(i)}
-                  disabled={quizState !== "question"}
-                >
-                  <span className="forge-option-letter">
-                    {["A", "B", "C", "D"][i]}
-                  </span>
-                  <span>{opt}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Feedback */}
-          {quizState !== "question" && (
-            <div className={`forge-feedback forge-feedback--${quizState}`}>
-              <div className="forge-feedback-icon">
-                {quizState === "correct" ? "✅" : "❌"}
+          {/* ── Concept phase ─────────────────────────────────────────── */}
+          {phase === "concept" && (
+            <>
+              <div className="forge-phase-label">
+                🧠 Concept {conceptIdx + 1} of {conceptCount}
               </div>
-              <div>
-                <div className="forge-feedback-title">
-                  {quizState === "correct"
-                    ? `Correct! +${current.xpReward} XP`
-                    : "Not quite"}
-                </div>
-                <p className="forge-feedback-explanation">
-                  {current.explanation}
-                </p>
-              </div>
-            </div>
+              <h2 className="forge-question">
+                {topic.concepts[conceptIdx].title}
+              </h2>
+              <p className="forge-concept-explanation">
+                {topic.concepts[conceptIdx].explanation}
+              </p>
+
+              {/* Plotly visualisation */}
+              {topic.concepts[conceptIdx].visualType !== "quiz" && (
+                <ConceptVisual
+                  visualType={topic.concepts[conceptIdx].visualType}
+                  topicId={topicId!}
+                  conceptIndex={conceptIdx}
+                />
+              )}
+
+              <button
+                className="btn btn-primary forge-next-btn"
+                onClick={handleConceptNext}
+              >
+                {conceptIdx < conceptCount - 1
+                  ? "Next concept →"
+                  : "Start exercises →"}
+              </button>
+            </>
           )}
 
-          {quizState !== "question" && (
-            <button
-              className="btn btn-primary forge-next-btn"
-              onClick={handleNext}
-            >
-              {isLast ? "Finish topic →" : "Next question →"}
-            </button>
+          {/* ── Exercise phase ────────────────────────────────────────── */}
+          {phase === "exercise" && (
+            <>
+              <div className="forge-phase-label">
+                ⚡ Exercise {attempted + 1} of 3
+                {totalXP > 0 && (
+                  <span className="forge-xp-pill">+{totalXP} XP so far</span>
+                )}
+              </div>
+
+              {loading && (
+                <div className="forge-exercise-loading">
+                  <div
+                    className="forge-loading-spinner"
+                    style={{ width: 28, height: 28 }}
+                  />
+                  <span>Loading adaptive exercise…</span>
+                </div>
+              )}
+
+              {error && <div className="forge-error">{error}</div>}
+
+              {exercise && !loading && (
+                <>
+                  <MultipleChoiceExercise
+                    exercise={exercise}
+                    result={result}
+                    submitting={submitting}
+                    onSubmit={handleSubmitAnswer}
+                  />
+                  {result && (
+                    <button
+                      className="btn btn-primary forge-next-btn"
+                      onClick={handleExerciseNext}
+                    >
+                      {attempted + 1 >= 3
+                        ? "Finish topic →"
+                        : "Next exercise →"}
+                    </button>
+                  )}
+                </>
+              )}
+            </>
           )}
         </div>
       </div>

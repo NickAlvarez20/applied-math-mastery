@@ -271,3 +271,47 @@
   display: flex;
   gap: var(--space-3);
 }
+
+.forge-phase-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.forge-xp-pill {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-xp);
+  background-color: var(--color-xp-light);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.forge-concept-explanation {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.forge-exercise-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  padding: var(--space-4) 0;
+}
+
+.forge-error {
+  padding: var(--space-4);
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
