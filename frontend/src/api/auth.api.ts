@@ -6,18 +6,17 @@ import type {
   RegisterPayload,
 } from "@/types/user.types";
 
+interface AuthResponse {
+  data: User;
+  token: string;
+}
+
 export const authAPI = {
   register: (payload: RegisterPayload) =>
-    client.post<{ data: User; tokens: AuthTokens }>(
-      "/api/v1/auth/register",
-      payload,
-    ),
+    client.post<AuthResponse>("/api/v1/auth/register", payload),
 
   login: (payload: LoginPayload) =>
-    client.post<{ data: User; tokens: AuthTokens }>(
-      "/api/v1/auth/login",
-      payload,
-    ),
+    client.post<AuthResponse>("/api/v1/auth/login", payload),
 
   logout: () => client.delete("/api/v1/auth/logout"),
 

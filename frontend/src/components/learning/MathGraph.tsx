@@ -10,7 +10,6 @@ interface Props {
   height?: number;
 }
 
-// Dynamically imports Plotly so it doesn't bloat the initial bundle.
 export default function MathGraph({
   traces,
   title,
@@ -19,16 +18,22 @@ export default function MathGraph({
   height = 360,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const dark = document.documentElement.getAttribute("data-theme") === "dark";
+  const dark =
+    document.documentElement.getAttribute("data-theme") === "dark";
 
   const bg = dark ? "#1a1830" : "#ffffff";
   const text = dark ? "#f0eeff" : "#1a1a2e";
   const grid = dark ? "#2e2b4a" : "#e2e0f0";
 
   useEffect(() => {
-    if (!ref.current) return;
+    const el = ref.current;
+    if (!el) return;
 
-    import("plotly.js").then((Plotly) => {
+    let cancelled = false;
+
+    import("plotly.js-dist-min").then((Plotly) => {
+      if (cancelled) return;
+
       const layout: Partial<Layout> = {
         title: { text: title ?? "", font: { color: text, size: 14 } },
         height,
@@ -54,7 +59,7 @@ export default function MathGraph({
         },
       };
 
-      Plotly.react(ref.current!, traces as any, layout, {
+      Plotly.react(el, traces, layout, {
         displayModeBar: false,
         responsive: true,
         scrollZoom: false,
@@ -62,15 +67,16 @@ export default function MathGraph({
     });
 
     return () => {
-      import("plotly.js").then((Plotly) => {
-        if (ref.current) Plotly.purge(ref.current);
+      cancelled = true;
+      import("plotly.js-dist-min").then((Plotly) => {
+        if (el.isConnected) Plotly.purge(el);
       });
     };
-  }, [traces, dark, title, xLabel, yLabel, height]);
+  }, [traces, dark, title, xLabel, yLabel, height, bg, text, grid]);
 
   return (
     <div className="math-graph-wrapper">
-      <div ref={ref} className="math-graph" />
+      <div ref={ref} className="math-graph" style={{ height }} />
     </div>
   );
 }

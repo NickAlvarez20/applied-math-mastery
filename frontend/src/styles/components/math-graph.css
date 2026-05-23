@@ -8,3 +8,23 @@
 .math-graph {
   width: 100%;
 }
+
+.math-graph--loading {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 25%,
+    var(--color-bg-tertiary) 50%,
+    var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: math-graph-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes math-graph-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

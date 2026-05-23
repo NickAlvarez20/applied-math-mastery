@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
-import AuthModal from "@/components/shared/AuthModal";
+import { useUIStore } from "@/store/uiStore";
 import "@/styles/pages/landing.css";
 
 const stats = [
@@ -64,8 +63,8 @@ const pitfallPreviews = [
 ];
 
 export default function LandingPage() {
-  const [authMode, setAuthMode] = useState<"login" | "register" | null>(null);
   const { user } = useAuthStore();
+  const openAuthModal = useUIStore((s) => s.openAuthModal);
 
   return (
     <div className="landing">
@@ -92,7 +91,7 @@ export default function LandingPage() {
               <>
                 <button
                   className="btn btn-primary btn-lg"
-                  onClick={() => setAuthMode("register")}
+                  onClick={() => openAuthModal("register")}
                 >
                   Start for free →
                 </button>
@@ -185,7 +184,7 @@ export default function LandingPage() {
               ) : (
                 <button
                   className="btn btn-primary btn-lg"
-                  onClick={() => setAuthMode("register")}
+                  onClick={() => openAuthModal("register")}
                 >
                   Create free account →
                 </button>
@@ -198,9 +197,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {authMode && (
-        <AuthModal initialMode={authMode} onClose={() => setAuthMode(null)} />
-      )}
     </div>
   );
 }

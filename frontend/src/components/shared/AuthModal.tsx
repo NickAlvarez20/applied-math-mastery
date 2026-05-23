@@ -27,15 +27,15 @@ export default function AuthModal({ onClose, initialMode = "login" }: Props) {
       if (mode === "register") {
         const res = await authAPI.register({ username, email, password });
         setAuth(res.data.data, {
-          accessToken: res.data.tokens.accessToken,
-          refreshToken: res.data.tokens.refreshToken || "",
+          accessToken: res.data.token,
+          refreshToken: "",
         });
         addToast(`Welcome to MathForge, ${username}!`, "success");
       } else {
         const res = await authAPI.login({ email, password });
         setAuth(res.data.data, {
-          accessToken: res.data.tokens.accessToken,
-          refreshToken: res.data.tokens.refreshToken || "",
+          accessToken: res.data.token,
+          refreshToken: "",
         });
         addToast("Welcome back!", "success");
       }

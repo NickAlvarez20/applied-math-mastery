@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
+import { useUIStore } from "@/store/uiStore";
 import { subjectsAPI } from "@/api/subjects.api";
 import { difficultyLabel } from "@/utils/formatters";
 import SkeletonCard from "@/components/shared/SkeletonCard";
@@ -20,6 +21,7 @@ export default function TopicDetail() {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
   const { user } = useAuthStore();
+  const openAuthModal = useUIStore((s) => s.openAuthModal);
   const [topic, setTopic] = useState<Topic | null>(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"concepts" | "pitfalls" | "realworld">(
@@ -187,7 +189,11 @@ export default function TopicDetail() {
                 Sign up free to access Forge Mode exercises and track your
                 progress.
               </p>
-              <button className="btn btn-primary" onClick={() => navigate("/")}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => openAuthModal("register")}
+              >
                 Create free account
               </button>
             </div>

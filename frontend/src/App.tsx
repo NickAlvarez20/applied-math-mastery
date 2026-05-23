@@ -15,6 +15,7 @@ import Dashboard from "@/pages/Dashboard";
 import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/NotFound";
 import ToastContainer from "@/components/shared/Toast";
+import AuthModal from "@/components/shared/AuthModal";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.accessToken);
@@ -22,7 +23,7 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { theme, setTheme } = useUIStore();
+  const { theme, authModal, closeAuthModal } = useUIStore();
 
   // Sync theme attribute on mount
   useEffect(() => {
@@ -31,7 +32,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <div className="app-shell">
         <Navbar />
+        <main className="app-main">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/subjects" element={<SubjectHub />} />
@@ -67,7 +70,16 @@ export default function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-      <ToastContainer />
+        </main>
+        <ToastContainer />
+        {authModal && (
+          <AuthModal
+            key={authModal}
+            initialMode={authModal}
+            onClose={closeAuthModal}
+          />
+        )}
+      </div>
     </BrowserRouter>
   );
 }

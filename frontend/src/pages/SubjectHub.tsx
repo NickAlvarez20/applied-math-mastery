@@ -1,16 +1,19 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSubjectStore } from "@/store/subjectStore";
 import { subjectsAPI } from "@/api/subjects.api";
-import { formatSalary } from "@/utils/formatters";
+import { formatSalary, difficultyLabel } from "@/utils/formatters";
 import SkeletonCard from "@/components/shared/SkeletonCard";
-import type { Subject } from "@/types/subject.types";
+import type { Subject, Topic } from "@/types/subject.types";
 import "@/styles/pages/subject-hub.css";
 
 export default function SubjectHub() {
+  const { subjectId } = useParams<{ subjectId?: string }>();
   const { subjects, status, setSubjects, setStatus, setError } =
     useSubjectStore();
   const navigate = useNavigate();
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [topicsLoading, setTopicsLoading] = useState(false);
 
   useEffect(() => {
     if (subjects.length > 0) return;
@@ -27,45 +30,116 @@ export default function SubjectHub() {
       });
   }, []);
 
+  useEffect(() => {
+    if (!subjectId) {
+      setTopics([]);
+      return;
+    }
+    setTopicsLoading(true);
+    subjectsAPI
+      .getTopics(subjectId)
+      .then((res) => setTopics(res.data.data))
+      .catch(() => setTopics([]))
+      .finally(() => setTopicsLoading(false));
+  }, [subjectId]);
+
+  const selectedSubject = subjectId
+    ? subjects.find((s) => s.id === subjectId)
+    : null;
+
   return (
     <div className="subject-hub">
       <div className="container">
-        <div className="hub-header">
-          <h1 className="hub-title">Choose your subject</h1>
-          <p className="hub-subtitle">
-            Each subject shows real-world applications and the careers mastery
-            unlocks.
-          </p>
-        </div>
+        {subjectId && selectedSubject ? (
+          <>
+            <div className="hub-header" style={{ textAlign: "left" }}>
+              <button
+                className="btn btn-ghost btn-sm"
+                onClick={() => navigate("/subjects")}
+                style={{ marginBottom: "var(--space-4)" }}
+              >
+                ← All subjects
+              </button>
+              <h1 className="hub-title">
+                {selectedSubject.icon} {selectedSubject.name}
+              </h1>
+              <p className="hub-subtitle" style={{ margin: 0 }}>
+                {selectedSubject.description}
+              </p>
+            </div>
 
-        {status === "loading" && (
-          <div className="subjects-grid">
-            {[1, 2, 3, 4].map((i) => (
-              <SkeletonCard key={i} height={240} />
-            ))}
-          </div>
-        )}
+            {topicsLoading && (
+              <div className="topics-list">
+                {[1, 2, 3].map((i) => (
+                  <SkeletonCard key={i} height={72} lines={1} />
+                ))}
+              </div>
+            )}
 
-        {status === "error" && (
-          <div className="hub-error">
-            Could not load subjects — is the backend running?
-          </div>
-        )}
+            {!topicsLoading && topics.length === 0 && (
+              <p className="hub-error">No topics found for this subject.</p>
+            )}
 
-        {(status === "success" || subjects.length > 0) && (
-          <div className="subjects-grid">
-            {subjects.map((s) => (
-              <SubjectCard
-                key={s.id}
-                subject={s}
-                onClick={() => navigate(`/subjects/${s.id}`)}
-              />
-            ))}
-          </div>
+            {!topicsLoading && topics.length > 0 && (
+              <div className="topics-list">
+                {topics.map((topic) => (
+                  <Link
+                    key={topic.id}
+                    to={`/topics/${topic.id}`}
+                    className="topic-row card card-hover"
+                  >
+                    <span className="topic-row-title">{topic.name}</span>
+                    <span className="topic-row-meta">
+                      <span className="badge badge-primary">
+                        {difficultyLabel(topic.difficulty)}
+                      </span>
+                      <span className="badge badge-xp">
+                        {topic.exerciseIds.length} exercises
+                      </span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="hub-header">
+              <h1 className="hub-title">Choose your subject</h1>
+              <p className="hub-subtitle">
+                Each subject shows real-world applications and the careers
+                mastery unlocks.
+              </p>
+            </div>
+
+            {status === "loading" && (
+              <div className="subjects-grid">
+                {[1, 2, 3, 4].map((i) => (
+                  <SkeletonCard key={i} height={240} />
+                ))}
+              </div>
+            )}
+
+            {status === "error" && (
+              <div className="hub-error">
+                Could not load subjects — is the backend running?
+              </div>
+            )}
+
+            {(status === "success" || subjects.length > 0) && (
+              <div className="subjects-grid">
+                {subjects.map((s) => (
+                  <SubjectCard
+                    key={s.id}
+                    subject={s}
+                    onClick={() => navigate(`/subjects/${s.id}`)}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
-
-      {/* Topic list for selected subject rendered below when /subjects/:id */}
     </div>
   );
 }
