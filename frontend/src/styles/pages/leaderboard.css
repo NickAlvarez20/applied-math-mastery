@@ -1,15 +1,21 @@
 .leaderboard-page {
   padding: var(--space-10) 0 var(--space-16);
+  min-height: calc(100vh - 60px);
+  background-color: var(--color-bg);
+  background-image: var(--gradient-mesh);
+  background-attachment: fixed;
 }
 
 .lb-header {
   text-align: center;
   margin-bottom: var(--space-8);
+  padding-top: var(--space-2);
 }
 
 .lb-title {
-  font-size: var(--text-4xl);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
   font-weight: 800;
+  letter-spacing: -0.03em;
   color: var(--color-text);
   margin-bottom: var(--space-3);
 }
@@ -17,20 +23,36 @@
 .lb-subtitle {
   font-size: var(--text-lg);
   color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.65;
 }
 
 .lb-tabs {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-1);
   border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-8);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.lb-loading, .lb-empty {
+.lb-loading,
+.lb-empty {
   text-align: center;
   padding: var(--space-12);
   color: var(--color-text-muted);
   font-size: var(--text-lg);
+  background-color: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-xl);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.lb-loading p,
+.lb-empty p {
+  margin: 0;
 }
 
 .lb-list {
@@ -46,30 +68,55 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
-.lb-row--top1 { border-color: #f59e0b; }
-.lb-row--top2 { border-color: #9ca3af; }
-.lb-row--top3 { border-color: #cd7c2f; }
+.lb-row:hover:not(.lb-row--me) {
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+.lb-row--top1 {
+  border-color: #f59e0b;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), transparent);
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2);
+}
+
+.lb-row--top2 {
+  border-color: #94a3b8;
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.08), transparent);
+}
+
+.lb-row--top3 {
+  border-color: #cd7c2f;
+  background: linear-gradient(90deg, rgba(205, 124, 47, 0.08), transparent);
+}
 
 .lb-row--me {
   background-color: var(--color-primary-light);
   border-color: var(--color-primary);
+  box-shadow: var(--shadow-glow);
 }
 
 .lb-rank {
   font-size: var(--text-lg);
   font-weight: 800;
-  min-width: 36px;
+  min-width: 40px;
   text-align: center;
   color: var(--color-text-muted);
 }
 
+.lb-row--top1 .lb-rank,
+.lb-row--top2 .lb-rank,
+.lb-row--top3 .lb-rank {
+  font-size: var(--text-xl);
+}
+
 .lb-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   color: #fff;
   font-weight: 700;
   font-size: var(--text-sm);
@@ -77,6 +124,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .lb-user-info {
@@ -84,12 +132,16 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  min-width: 0;
 }
 
 .lb-username {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .lb-you-badge {
@@ -97,21 +149,37 @@
   font-weight: 700;
   color: var(--color-primary);
   background-color: var(--color-primary-light);
-  padding: 1px var(--space-2);
+  padding: 2px var(--space-2);
   border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
-.lb-level, .lb-streak {
+.lb-level,
+.lb-streak {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  min-width: 52px;
+  min-width: 56px;
   text-align: center;
+  font-weight: 500;
 }
 
 .lb-xp {
   font-size: var(--text-base);
   font-weight: 800;
   color: var(--color-xp);
-  min-width: 80px;
+  min-width: 88px;
   text-align: right;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 640px) {
+  .lb-level,
+  .lb-streak {
+    display: none;
+  }
+
+  .lb-xp {
+    min-width: 64px;
+    font-size: var(--text-sm);
+  }
 }

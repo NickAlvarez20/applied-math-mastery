@@ -9,16 +9,16 @@ import "./styles/pages/career-explorer.css";
 import "./styles/pages/dashboard.css";
 import "./styles/pages/leaderboard.css";
 import "./styles/pages/achievements.css";
+import "./styles/pages/not-found.css";
 import "./styles/components/math-graph.css";
 import "./styles/components/exercise.css";
 import "./styles/components/mastery-badge.css";
 import "./styles/components/daily-challenge.css";
 
-// Apply saved dark mode before first render to avoid flash
+// Apply saved theme before first render to avoid flash
 const saved = JSON.parse(localStorage.getItem("mathforge-ui") || "{}");
-if (saved?.state?.theme === "dark") {
-  document.documentElement.setAttribute("data-theme", "dark");
-}
+const savedTheme = saved?.state?.theme === "dark" ? "dark" : "light";
+document.documentElement.setAttribute("data-theme", savedTheme);
 
 // Global styles
 import "./styles/index.css";

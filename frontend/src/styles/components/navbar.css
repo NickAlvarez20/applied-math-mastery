@@ -2,7 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--color-bg);
+  background-color: var(--navbar-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   height: 60px;
 }
@@ -73,13 +75,10 @@
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-streak);
-  background-color: #fff1eb;
+  background-color: var(--color-streak-light);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
-}
-
-[data-theme="dark"] .navbar-streak {
-  background-color: #2a1500;
+  border: 1px solid rgba(234, 88, 12, 0.2);
 }
 
 .navbar-xp {
