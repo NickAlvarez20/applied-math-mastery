@@ -1,0 +1,236 @@
+[
+  {
+    "id": "ex-lin-1",
+    "topicId": "algebra-linear-equations",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "xpReward": 10,
+    "question": "Solve for x: 2x + 6 = 14",
+    "options": ["x = 3", "x = 4", "x = 10", "x = 7"],
+    "answer": "1",
+    "explanation": "Subtract 6 from both sides: 2x = 8. Then divide both sides by 2: x = 4. Always apply each operation to BOTH sides.",
+    "hint": "Start by subtracting 6 from both sides."
+  },
+  {
+    "id": "ex-lin-2",
+    "topicId": "algebra-linear-equations",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "A line has slope 3 and passes through (0, -2). What is its equation?",
+    "options": ["y = 3x + 2", "y = 3x - 2", "y = -2x + 3", "y = 2x - 3"],
+    "answer": "1",
+    "explanation": "Slope-intercept form is y = mx + b. Here m = 3 (slope) and b = -2 (y-intercept where x = 0). So y = 3x - 2.",
+    "hint": "Use slope-intercept form y = mx + b."
+  },
+  {
+    "id": "ex-lin-3",
+    "topicId": "algebra-linear-equations",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "xpReward": 35,
+    "question": "If 5(x - 3) = 2x + 6, what is x?",
+    "options": ["x = 7", "x = 3", "x = 9", "x = 5"],
+    "answer": "0",
+    "explanation": "Expand: 5x - 15 = 2x + 6. Subtract 2x: 3x - 15 = 6. Add 15: 3x = 21. Divide: x = 7.",
+    "hint": "Expand the brackets first, then collect like terms."
+  },
+  {
+    "id": "ex-quad-1",
+    "topicId": "algebra-quadratics",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "How many solutions does x² = 9 have?",
+    "options": [
+      "None",
+      "One (x = 3)",
+      "Two (x = 3 and x = -3)",
+      "Infinitely many"
+    ],
+    "answer": "2",
+    "explanation": "Square root always produces two solutions: positive and negative. x = ±√9 = ±3. Forgetting the negative solution is the most common error here.",
+    "hint": "Square root always has a ± in front of it."
+  },
+  {
+    "id": "ex-quad-2",
+    "topicId": "algebra-quadratics",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "xpReward": 35,
+    "question": "Which method is FASTEST for solving x² - 5x + 6 = 0?",
+    "options": [
+      "Quadratic formula",
+      "Completing the square",
+      "Factoring (x-2)(x-3) = 0",
+      "Graphing"
+    ],
+    "answer": "2",
+    "explanation": "This factors cleanly: (x-2)(x-3) = 0, giving x = 2 or x = 3. When you can spot integer factors quickly, factoring is always the fastest method.",
+    "hint": "Look for two numbers that multiply to 6 and add to -5."
+  },
+  {
+    "id": "ex-deriv-1",
+    "topicId": "calculus-derivatives",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "What is the derivative of f(x) = x³ + 2x?",
+    "options": ["3x² + 2", "3x²", "x² + 2", "3x³ + 2x"],
+    "answer": "0",
+    "explanation": "Apply the power rule to each term. d/dx(x³) = 3x². d/dx(2x) = 2. So f'(x) = 3x² + 2.",
+    "hint": "Apply the power rule: d/dx(xⁿ) = nxⁿ⁻¹ to each term."
+  },
+  {
+    "id": "ex-deriv-2",
+    "topicId": "calculus-derivatives",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "xpReward": 35,
+    "question": "What is the derivative of f(x) = sin(x²)?",
+    "options": ["cos(x²)", "2x·cos(x²)", "2x·cos(x)", "sin(2x)"],
+    "answer": "1",
+    "explanation": "Use the chain rule. Outer function: sin(u), derivative = cos(u). Inner function: u = x², derivative = 2x. Chain rule: f'(x) = cos(x²) · 2x = 2x·cos(x²).",
+    "hint": "Identify the outer and inner functions, then apply the chain rule."
+  },
+  {
+    "id": "ex-deriv-3",
+    "topicId": "calculus-derivatives",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "xpReward": 55,
+    "question": "At what x-value does f(x) = x³ - 3x have a local minimum?",
+    "options": ["x = 0", "x = 1", "x = -1", "x = 3"],
+    "answer": "1",
+    "explanation": "Set f'(x) = 0: 3x² - 3 = 0, so x = ±1. f''(x) = 6x. At x = 1: f''(1) = 6 > 0, confirming a local minimum. At x = -1: f''(-1) = -6 < 0, a local maximum.",
+    "hint": "Find where f'(x) = 0, then use the second derivative test."
+  },
+  {
+    "id": "ex-prob-1",
+    "topicId": "stats-probability",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "xpReward": 10,
+    "question": "You flip a fair coin 10 times and get heads every time. What is the probability of heads on the next flip?",
+    "options": [
+      "Less than 50% — tails is 'due'",
+      "50%",
+      "More than 50% — the coin is hot",
+      "It depends on the coin"
+    ],
+    "answer": "1",
+    "explanation": "Each flip is independent. Past results have zero effect on future flips. P(heads) is always 0.5 for a fair coin. This is the gambler's fallacy — believing past outcomes affect independent future events.",
+    "hint": "Are coin flips independent events?"
+  },
+  {
+    "id": "ex-prob-2",
+    "topicId": "stats-probability",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "P(A) = 0.4 and P(B) = 0.3. If A and B are independent, what is P(A and B)?",
+    "options": ["0.7", "0.12", "0.1", "0.58"],
+    "answer": "1",
+    "explanation": "For independent events: P(A and B) = P(A) × P(B) = 0.4 × 0.3 = 0.12. Independence means knowing A occurred tells you nothing about B.",
+    "hint": "For independent events, multiply the probabilities."
+  },
+  {
+    "id": "ex-tri-1",
+    "topicId": "geo-triangles",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "xpReward": 10,
+    "question": "A right triangle has legs of length 3 and 4. What is the hypotenuse?",
+    "options": ["5", "6", "7", "√7"],
+    "answer": "0",
+    "explanation": "By the Pythagorean theorem: c² = 3² + 4² = 9 + 16 = 25. So c = √25 = 5. The 3-4-5 triangle is the most famous Pythagorean triple.",
+    "hint": "Apply a² + b² = c²."
+  },
+  {
+    "id": "ex-tri-2",
+    "topicId": "geo-triangles",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "Can you apply a² + b² = c² to a triangle with sides 5, 7, and 9?",
+    "options": [
+      "Yes, using 9 as the hypotenuse",
+      "No — the theorem only applies to right triangles",
+      "Yes, using any side as c",
+      "Only if the triangle is equilateral"
+    ],
+    "answer": "1",
+    "explanation": "The Pythagorean theorem only applies when there is a right angle. Check: 5² + 7² = 25 + 49 = 74 ≠ 81 = 9². This is not a right triangle, so the theorem does not apply.",
+    "hint": "What is the key requirement for using the Pythagorean theorem?"
+  },
+  {
+    "id": "ex-int-1",
+    "topicId": "calculus-integrals",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "What is ∫2x dx?",
+    "options": ["x² + C", "2 + C", "x²", "2x² + C"],
+    "answer": "0",
+    "explanation": "Apply the power rule for integration: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C. For 2x: 2 · x²/2 = x². Don't forget +C — the constant of integration is always required for indefinite integrals.",
+    "hint": "Don't forget +C at the end."
+  },
+  {
+    "id": "ex-int-2",
+    "topicId": "calculus-integrals",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "xpReward": 35,
+    "question": "Geometrically, what does ∫₀³ x² dx represent?",
+    "options": [
+      "The slope of x² at x = 3",
+      "The area under the curve y = x² from x = 0 to x = 3",
+      "The maximum value of x²",
+      "The average of x² over all real numbers"
+    ],
+    "answer": "1",
+    "explanation": "A definite integral represents the signed area between the curve and the x-axis over the given interval. ∫₀³ x² dx = [x³/3]₀³ = 9 - 0 = 9 square units.",
+    "hint": "Think about what integration measures geometrically."
+  },
+  {
+    "id": "ex-lim-1",
+    "topicId": "calculus-limits",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "What is lim(x→2) of (x² - 4)/(x - 2)?",
+    "options": ["0", "Undefined", "4", "2"],
+    "answer": "2",
+    "explanation": "Direct substitution gives 0/0 (indeterminate). Factor the numerator: (x²-4) = (x+2)(x-2). Cancel (x-2): the limit becomes lim(x→2) (x+2) = 4. The function is undefined AT x=2 but the limit exists.",
+    "hint": "Try factoring the numerator before substituting."
+  },
+  {
+    "id": "ex-dist-1",
+    "topicId": "stats-distributions",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "xpReward": 20,
+    "question": "Why does the Central Limit Theorem matter in practice?",
+    "options": [
+      "It proves all data is normally distributed",
+      "It lets us use normal distribution tools on sample means even when the original data is not normal",
+      "It guarantees our sample is representative",
+      "It removes the need for large sample sizes"
+    ],
+    "answer": "1",
+    "explanation": "The CLT states that sample means become normally distributed as sample size grows, regardless of the original distribution. This is why so many statistical tests work broadly — they operate on means, not raw data.",
+    "hint": "What does the CLT say about sample means specifically?"
+  },
+  {
+    "id": "ex-coord-1",
+    "topicId": "geo-coordinate",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "xpReward": 10,
+    "question": "What is the distance between points (1, 2) and (4, 6)?",
+    "options": ["5", "7", "3", "√7"],
+    "answer": "0",
+    "explanation": "Distance = √((4-1)² + (6-2)²) = √(9 + 16) = √25 = 5. This is just the Pythagorean theorem applied to the horizontal and vertical separations.",
+    "hint": "The distance formula is Pythagoras in disguise."
+  }
+]

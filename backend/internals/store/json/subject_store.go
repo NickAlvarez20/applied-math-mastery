@@ -3,14 +3,14 @@ package jsonstore
 import (
 	"encoding/json"
 	"fmt"
+	"mathforge/internals/models"
 	"os"
 	"path/filepath"
 	"sync"
-	"mathforge/internals/models"
 )
 
 type SubjectStore struct {
-	mu       sync.RWMutex
+	mu        sync.RWMutex
 	subjects  map[string]*models.Subject
 	topics    map[string]*models.Topic
 	exercises map[string]*models.Exercise
@@ -42,6 +42,12 @@ func (s *SubjectStore) load(dataPath string) error {
 			return fmt.Errorf("loading %s: %w", f, err)
 		}
 	}
+
+	exerciseFile := filepath.Join(dataPath, "exercises.json")
+	if err := s.loadExercises(exerciseFile); err != nil {
+		fmt.Printf("warning: could not load exercises: %v\n", err)
+	}
+
 	return nil
 }
 
@@ -71,6 +77,22 @@ func (s *SubjectStore) loadTopics(path string) error {
 	}
 	for i := range topics {
 		s.topics[topics[i].ID] = &topics[i]
+	}
+	return nil
+}
+
+// Add this new method to SubjectStore:
+func (s *SubjectStore) loadExercises(path string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return fmt.Errorf("reading exercises.json: %w", err)
+	}
+	var exercises []models.Exercise
+	if err := json.Unmarshal(data, &exercises); err != nil {
+		return fmt.Errorf("parsing exercises.json: %w", err)
+	}
+	for i := range exercises {
+		s.exercises[exercises[i].ID] = &exercises[i]
 	}
 	return nil
 }
