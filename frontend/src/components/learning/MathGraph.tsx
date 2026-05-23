@@ -1,6 +1,13 @@
 import { useEffect, useRef } from "react";
 import type { Layout, Data } from "plotly.js";
 import "@/styles/components/math-graph.css";
+import Plotly from "plotly.js-dist-min";
+
+declare global {
+  interface Window {
+    Plotly: typeof Plotly;
+  }
+}
 
 interface Props {
   traces: Data[];
@@ -28,11 +35,12 @@ export default function MathGraph({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
     let cancelled = false;
 
-    import("plotly.js-dist-min").then((Plotly) => {
+    import("plotly.js-dist-min").then((module) => {
       if (cancelled) return;
+      // Cast the module to the global Plotly type
+      const PlotlyLib = module as unknown as typeof Plotly;
 
       const layout: Partial<Layout> = {
         title: { text: title ?? "", font: { color: text, size: 14 } },
@@ -53,13 +61,10 @@ export default function MathGraph({
           zerolinecolor: grid,
           color: text,
         },
-        legend: {
-          bgcolor: "rgba(0,0,0,0)",
-          font: { color: text },
-        },
+        legend: { bgcolor: "rgba(0,0,0,0)", font: { color: text } },
       };
 
-      Plotly.react(el, traces, layout, {
+      PlotlyLib.react(el, traces, layout, {
         displayModeBar: false,
         responsive: true,
         scrollZoom: false,
@@ -68,8 +73,9 @@ export default function MathGraph({
 
     return () => {
       cancelled = true;
-      import("plotly.js-dist-min").then((Plotly) => {
-        if (el.isConnected) Plotly.purge(el);
+      import("plotly.js-dist-min").then((module) => {
+        const PlotlyLib = module as unknown as typeof Plotly;
+        if (el.isConnected) PlotlyLib.purge(el);
       });
     };
   }, [traces, dark, title, xLabel, yLabel, height, bg, text, grid]);
