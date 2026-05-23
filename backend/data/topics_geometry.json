@@ -1,0 +1,102 @@
+[
+  {
+    "id": "geo-triangles",
+    "subjectId": "geometry",
+    "name": "Triangles and Trigonometry",
+    "difficulty": 2,
+    "exerciseIds": ["ex-tri-1", "ex-tri-2"],
+    "concepts": [
+      {
+        "title": "Why the Pythagorean theorem works",
+        "explanation": "The theorem states a² + b² = c² for right triangles, but the visual proof makes it obvious: build a square on each side of the triangle. The area of the two smaller squares exactly equals the area of the largest. This area relationship is preserved for all similar right triangles, making it universal.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Applying the Pythagorean theorem to non-right triangles",
+        "whyCommon": "Students recognise a triangle and automatically use a² + b² = c². The right angle requirement is silently dropped.",
+        "fixStrategy": "Before applying the theorem, mark the right angle explicitly on the diagram. If none exists, use the Law of Cosines instead.",
+        "affectedPct": 60
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Construction",
+        "example": "The 3-4-5 rule lets builders verify right angles without a protractor"
+      },
+      {
+        "domain": "Navigation",
+        "example": "GPS triangulation uses triangle geometry to pinpoint location"
+      },
+      {
+        "domain": "Game Dev",
+        "example": "Collision detection and character movement use vector dot products from trig"
+      }
+    ]
+  },
+  {
+    "id": "geo-circles",
+    "subjectId": "geometry",
+    "name": "Circles and Pi",
+    "difficulty": 2,
+    "exerciseIds": ["ex-cir-1", "ex-cir-2"],
+    "concepts": [
+      {
+        "title": "Why π is irrational and what that really means",
+        "explanation": "π = 3.14159... never terminates and never repeats. It emerges whenever you divide a circle's circumference by its diameter — any circle, any size, anywhere in the universe. Its irrationality means no fraction can represent it exactly, which is why engineering always uses approximations.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Confusing circumference (2πr) with area (πr²)",
+        "whyCommon": "Both involve π and r. Students mix the formulas because they don't understand what each measures.",
+        "fixStrategy": "Circumference measures distance around (one dimension → linear in r). Area measures space inside (two dimensions → r is squared). Units confirm this: cm vs cm².",
+        "affectedPct": 69
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Engineering",
+        "example": "Gear ratios, wheel rotations, and pulley systems all use circumference"
+      },
+      {
+        "domain": "Signal Proc.",
+        "example": "Fourier transforms decompose signals into circular (sinusoidal) components"
+      }
+    ]
+  },
+  {
+    "id": "geo-coordinate",
+    "subjectId": "geometry",
+    "name": "Coordinate Geometry",
+    "difficulty": 3,
+    "exerciseIds": ["ex-coord-1", "ex-coord-2"],
+    "concepts": [
+      {
+        "title": "The distance formula is just Pythagoras",
+        "explanation": "To find the distance between two points (x₁,y₁) and (x₂,y₂), draw a right triangle using the horizontal and vertical separations as legs. The distance is the hypotenuse: √((x₂-x₁)² + (y₂-y₁)²). Every distance calculation in 2D space — collision detection, nearest neighbour search, map distances — reduces to this.",
+        "visualType": "graph"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Calculating midpoint by averaging only x, forgetting to average y too",
+        "whyCommon": "Students remember 'add and divide by 2' but apply it only to x after partially solving the problem.",
+        "fixStrategy": "Write the midpoint formula as a pair from the start: M = ((x₁+x₂)/2, (y₁+y₂)/2). Treat it as one operation, not two.",
+        "affectedPct": 52
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Maps / GIS",
+        "example": "Every coordinate on Google Maps is a point in a coordinate system"
+      },
+      {
+        "domain": "Robotics",
+        "example": "Robot path planning calculates distances and midpoints in 2D/3D coordinate space"
+      }
+    ]
+  }
+]

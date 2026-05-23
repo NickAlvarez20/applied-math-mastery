@@ -1,0 +1,122 @@
+[
+  {
+    "id": "algebra-linear-equations",
+    "subjectId": "algebra",
+    "name": "Linear Equations",
+    "difficulty": 2,
+    "exerciseIds": ["ex-lin-1", "ex-lin-2", "ex-lin-3"],
+    "concepts": [
+      {
+        "title": "What is a linear equation?",
+        "explanation": "A linear equation is any equation where the variable appears only to the first power. Graphically it always produces a straight line. The standard form ax + b = c tells you: 'x scaled by a, then shifted by b, equals c'. Every transformation you perform to solve it must be done to both sides simultaneously — you are keeping a balance.",
+        "visualType": "graph"
+      },
+      {
+        "title": "Slope-intercept form y = mx + b",
+        "explanation": "m is the slope — how steeply the line rises per unit step right. b is the y-intercept — where the line crosses the vertical axis. This form makes it trivial to draw the line: start at b on the y-axis, then step right 1 and up m repeatedly.",
+        "visualType": "graph"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Forgetting to apply an operation to BOTH sides",
+        "whyCommon": "Students focus on isolating the variable and mentally skip performing the same step on the right-hand side.",
+        "fixStrategy": "Narrate every step aloud: 'I subtract 3 from the left side, so I must subtract 3 from the right side too.'",
+        "affectedPct": 78
+      },
+      {
+        "description": "Sign errors when moving terms across the equals sign",
+        "whyCommon": "The shortcut 'move it to the other side and flip the sign' hides the actual operation (adding the inverse), causing errors with double negatives.",
+        "fixStrategy": "Never 'move' terms. Instead always add or subtract from both sides explicitly.",
+        "affectedPct": 65
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Finance",
+        "example": "Calculating breakeven point: fixed costs + variable cost × units = revenue"
+      },
+      {
+        "domain": "Engineering",
+        "example": "Ohm's Law V = IR is a linear equation relating voltage, current and resistance"
+      },
+      {
+        "domain": "Nutrition",
+        "example": "Tracking daily calories: base metabolic rate + activity calories = total"
+      }
+    ]
+  },
+  {
+    "id": "algebra-quadratics",
+    "subjectId": "algebra",
+    "name": "Quadratic Equations",
+    "difficulty": 3,
+    "exerciseIds": ["ex-quad-1", "ex-quad-2"],
+    "concepts": [
+      {
+        "title": "The parabola and why it appears everywhere",
+        "explanation": "Any equation with x² produces a parabola — a U-shaped curve. This shape is not arbitrary: it describes the path of any projectile under gravity, the cross-section of satellite dishes designed to focus signals, and the profit curves of businesses with fixed and variable costs.",
+        "visualType": "graph"
+      },
+      {
+        "title": "Three solving methods and when to use each",
+        "explanation": "Factoring is fastest when integer roots exist. Completing the square reveals the vertex form and is used to derive the quadratic formula. The quadratic formula works universally but is slower. Recognise the problem type first, then choose the tool.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Forgetting that x² = 9 has TWO solutions (x = 3 and x = -3)",
+        "whyCommon": "Students apply square root only in the positive direction by habit.",
+        "fixStrategy": "Always write ±√ when taking a square root during solving. Say 'plus or minus' aloud.",
+        "affectedPct": 72
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Physics",
+        "example": "Projectile motion: height = -½gt² + v₀t + h₀"
+      },
+      {
+        "domain": "Business",
+        "example": "Revenue = price × quantity; when price depends on quantity, the result is quadratic"
+      },
+      {
+        "domain": "Architecture",
+        "example": "Parabolic arches distribute load evenly — used in bridges and cathedrals"
+      }
+    ]
+  },
+  {
+    "id": "algebra-systems",
+    "subjectId": "algebra",
+    "name": "Systems of Equations",
+    "difficulty": 3,
+    "exerciseIds": ["ex-sys-1", "ex-sys-2"],
+    "concepts": [
+      {
+        "title": "What a system actually means geometrically",
+        "explanation": "Each equation in the system is a line (or plane in 3D). The solution is the point where all lines intersect simultaneously. If lines are parallel they never intersect — no solution. If lines are identical — infinite solutions. Visualising this eliminates most confusion about when solutions exist.",
+        "visualType": "graph"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Substituting back into the wrong equation to find the second variable",
+        "whyCommon": "Any equation in the system will give the right answer, but students sometimes substitute into a derived (modified) equation rather than an original one, introducing errors.",
+        "fixStrategy": "Always substitute back into one of the original unmodified equations.",
+        "affectedPct": 55
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Economics",
+        "example": "Supply and demand equilibrium: find price and quantity where two linear functions intersect"
+      },
+      {
+        "domain": "Chemistry",
+        "example": "Mixture problems: two solutions of different concentrations combined to hit a target"
+      }
+    ]
+  }
+]

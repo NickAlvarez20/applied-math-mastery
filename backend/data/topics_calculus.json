@@ -1,0 +1,107 @@
+[
+  {
+    "id": "calculus-limits",
+    "subjectId": "calculus",
+    "name": "Limits",
+    "difficulty": 3,
+    "exerciseIds": ["ex-lim-1", "ex-lim-2"],
+    "concepts": [
+      {
+        "title": "What a limit actually is",
+        "explanation": "A limit describes what value a function approaches as the input approaches some number — not what the value IS at that point. This distinction is crucial: a function can have a limit at a point where it is undefined. Limits are the foundation that makes calculus rigorous.",
+        "visualType": "graph"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Assuming lim f(x) = f(a) always holds",
+        "whyCommon": "For most everyday functions this is true (continuity), so students apply it universally and fail for piecewise or rational functions with holes.",
+        "fixStrategy": "Always check if the function is continuous at the point first. If not, evaluate the limit from both sides separately.",
+        "affectedPct": 68
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Physics",
+        "example": "Instantaneous velocity is the limit of average velocity as the time interval shrinks to zero"
+      },
+      {
+        "domain": "Finance",
+        "example": "Continuous compound interest uses the limit definition of e"
+      }
+    ]
+  },
+  {
+    "id": "calculus-derivatives",
+    "subjectId": "calculus",
+    "name": "Derivatives",
+    "difficulty": 4,
+    "exerciseIds": ["ex-deriv-1", "ex-deriv-2", "ex-deriv-3"],
+    "concepts": [
+      {
+        "title": "The derivative as a rate of change",
+        "explanation": "The derivative f'(x) tells you the instantaneous rate of change of f at any point x — it is the slope of the tangent line to the curve at that point. Every time you see 'rate of change' in the real world, a derivative is involved: speed (rate of change of position), acceleration (rate of change of speed), growth rate of a population.",
+        "visualType": "simulation"
+      },
+      {
+        "title": "The chain rule — derivatives of composed functions",
+        "explanation": "When one function is nested inside another, the chain rule says: differentiate the outside function (leaving the inside unchanged), then multiply by the derivative of the inside. Visualise peeling layers of an onion — you handle each layer in turn.",
+        "visualType": "drag"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Forgetting the chain rule for composite functions",
+        "whyCommon": "Students correctly differentiate simple functions but apply those rules mechanically to composed functions, forgetting the inner derivative.",
+        "fixStrategy": "Before differentiating, explicitly identify: what is the outer function? What is the inner function? Write them down before computing.",
+        "affectedPct": 81
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "AI / ML",
+        "example": "Backpropagation in neural networks chains derivatives through every layer"
+      },
+      {
+        "domain": "Economics",
+        "example": "Marginal cost and marginal revenue are derivatives of total cost and revenue functions"
+      },
+      {
+        "domain": "Medicine",
+        "example": "Drug concentration rate of change in bloodstream guides dosing intervals"
+      }
+    ]
+  },
+  {
+    "id": "calculus-integrals",
+    "subjectId": "calculus",
+    "name": "Integrals",
+    "difficulty": 4,
+    "exerciseIds": ["ex-int-1", "ex-int-2"],
+    "concepts": [
+      {
+        "title": "Integration as area accumulation",
+        "explanation": "The definite integral of f from a to b is the signed area between the curve and the x-axis. 'Signed' means area below the axis is negative. This is not just a geometric curiosity — accumulated area physically represents total distance traveled, total work done, total probability in a range, or total revenue over time.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Forgetting the constant of integration C for indefinite integrals",
+        "whyCommon": "The mechanical process of applying integration rules works without C, so students omit it and lose marks.",
+        "fixStrategy": "Write +C immediately after writing the integral sign, before doing any computation — make it a physical habit.",
+        "affectedPct": 74
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Physics",
+        "example": "Work done by a variable force = integral of force over displacement"
+      },
+      {
+        "domain": "Probability",
+        "example": "P(a ≤ X ≤ b) = integral of the probability density function from a to b"
+      }
+    ]
+  }
+]

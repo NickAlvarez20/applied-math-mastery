@@ -1,0 +1,126 @@
+[
+  {
+    "id": "algebra",
+    "name": "Algebra",
+    "slug": "algebra",
+    "description": "The language of patterns and relationships. Algebra underpins everything from financial modelling to machine learning.",
+    "icon": "∑",
+    "topicIds": [
+      "algebra-linear-equations",
+      "algebra-quadratics",
+      "algebra-systems"
+    ],
+    "careers": [
+      {
+        "title": "Data Scientist",
+        "avgSalaryUSD": 122000,
+        "salaryBoostUSD": 18000,
+        "demand": "extreme"
+      },
+      {
+        "title": "Financial Analyst",
+        "avgSalaryUSD": 95000,
+        "salaryBoostUSD": 12000,
+        "demand": "high"
+      },
+      {
+        "title": "Software Engineer",
+        "avgSalaryUSD": 130000,
+        "salaryBoostUSD": 15000,
+        "demand": "extreme"
+      }
+    ]
+  },
+  {
+    "id": "calculus",
+    "name": "Calculus",
+    "slug": "calculus",
+    "description": "The mathematics of change. Used in physics, engineering, AI training, and modelling anything that moves or grows.",
+    "icon": "∫",
+    "topicIds": [
+      "calculus-limits",
+      "calculus-derivatives",
+      "calculus-integrals"
+    ],
+    "careers": [
+      {
+        "title": "ML Engineer",
+        "avgSalaryUSD": 148000,
+        "salaryBoostUSD": 35000,
+        "demand": "extreme"
+      },
+      {
+        "title": "Mechanical Engineer",
+        "avgSalaryUSD": 98000,
+        "salaryBoostUSD": 22000,
+        "demand": "high"
+      },
+      {
+        "title": "Quantitative Analyst",
+        "avgSalaryUSD": 165000,
+        "salaryBoostUSD": 45000,
+        "demand": "very high"
+      }
+    ]
+  },
+  {
+    "id": "statistics",
+    "name": "Statistics",
+    "slug": "statistics",
+    "description": "Turning data into decisions. The foundation of data science, research, medicine, and business intelligence.",
+    "icon": "σ",
+    "topicIds": [
+      "stats-probability",
+      "stats-distributions",
+      "stats-hypothesis"
+    ],
+    "careers": [
+      {
+        "title": "Data Analyst",
+        "avgSalaryUSD": 90000,
+        "salaryBoostUSD": 20000,
+        "demand": "extreme"
+      },
+      {
+        "title": "Biostatistician",
+        "avgSalaryUSD": 105000,
+        "salaryBoostUSD": 28000,
+        "demand": "very high"
+      },
+      {
+        "title": "Research Scientist",
+        "avgSalaryUSD": 115000,
+        "salaryBoostUSD": 25000,
+        "demand": "high"
+      }
+    ]
+  },
+  {
+    "id": "geometry",
+    "name": "Geometry",
+    "slug": "geometry",
+    "description": "The mathematics of space and shape. Powers computer graphics, architecture, robotics, and game development.",
+    "icon": "△",
+    "topicIds": ["geo-triangles", "geo-circles", "geo-coordinate"],
+    "careers": [
+      {
+        "title": "Game Developer",
+        "avgSalaryUSD": 105000,
+        "salaryBoostUSD": 18000,
+        "demand": "high"
+      },
+      {
+        "title": "Architect",
+        "avgSalaryUSD": 92000,
+        "salaryBoostUSD": 14000,
+        "demand": "high"
+      },
+      {
+        "title": "Computer Vision Eng",
+        "avgSalaryUSD": 140000,
+        "salaryBoostUSD": 30000,
+        "demand": "very high"
+      }
+    ]
+  }
+]

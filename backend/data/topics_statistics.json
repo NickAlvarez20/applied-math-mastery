@@ -1,0 +1,98 @@
+[
+  {
+    "id": "stats-probability",
+    "subjectId": "statistics",
+    "name": "Probability",
+    "difficulty": 2,
+    "exerciseIds": ["ex-prob-1", "ex-prob-2"],
+    "concepts": [
+      {
+        "title": "Probability as long-run frequency",
+        "explanation": "A probability is not a one-time guarantee — it is the proportion of times an event occurs over a very large number of identical trials. P(heads) = 0.5 does not mean you get heads every other flip; it means as flips → ∞, the fraction converges to 0.5. This interpretation explains why individual rare events still happen regularly in large populations.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Gambler's fallacy — believing past outcomes affect future independent events",
+        "whyCommon": "Human pattern-recognition instincts evolved to find cause-effect links, which fires incorrectly for truly random sequences.",
+        "fixStrategy": "Ask explicitly: are these events independent? If yes, past outcomes are mathematically irrelevant.",
+        "affectedPct": 70
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Insurance",
+        "example": "Actuaries price premiums by calculating expected value of claims"
+      },
+      {
+        "domain": "Medicine",
+        "example": "Clinical trial design uses probability to detect real treatment effects"
+      }
+    ]
+  },
+  {
+    "id": "stats-distributions",
+    "subjectId": "statistics",
+    "name": "Probability Distributions",
+    "difficulty": 3,
+    "exerciseIds": ["ex-dist-1", "ex-dist-2"],
+    "concepts": [
+      {
+        "title": "The normal distribution and why it appears everywhere",
+        "explanation": "The Central Limit Theorem guarantees that the average of many independent random variables converges to a normal distribution regardless of the original distribution. This is why heights, measurement errors, test scores, and countless natural phenomena are bell-curved — they are sums of many small independent effects.",
+        "visualType": "graph"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Treating all data as normally distributed",
+        "whyCommon": "The normal distribution is so dominant in textbooks that students apply it universally, including to skewed data like income or wait times.",
+        "fixStrategy": "Always plot the data first. Check for skew, heavy tails, or bimodality before assuming normality.",
+        "affectedPct": 63
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Quality Control",
+        "example": "Six Sigma uses normal distribution to set manufacturing defect tolerances"
+      },
+      {
+        "domain": "Finance",
+        "example": "Options pricing (Black-Scholes) assumes normally distributed log returns"
+      }
+    ]
+  },
+  {
+    "id": "stats-hypothesis",
+    "subjectId": "statistics",
+    "name": "Hypothesis Testing",
+    "difficulty": 4,
+    "exerciseIds": ["ex-hyp-1", "ex-hyp-2"],
+    "concepts": [
+      {
+        "title": "What a p-value actually means",
+        "explanation": "A p-value is the probability of observing results at least as extreme as yours, assuming the null hypothesis is true. It is NOT the probability that the null hypothesis is true, nor the probability your result occurred by chance. Misreading p-values is one of the most widespread errors in published science.",
+        "visualType": "simulation"
+      }
+    ],
+    "pitfalls": [
+      {
+        "description": "Confusing statistical significance with practical significance",
+        "whyCommon": "With large samples, tiny meaningless differences become statistically significant. Students report p < 0.05 without reporting effect size.",
+        "fixStrategy": "Always report effect size (Cohen's d, R², etc.) alongside p-values. Ask: is this difference large enough to matter in practice?",
+        "affectedPct": 76
+      }
+    ],
+    "realWorld": [
+      {
+        "domain": "Medicine",
+        "example": "FDA drug approval requires hypothesis tests showing efficacy above placebo"
+      },
+      {
+        "domain": "Tech",
+        "example": "A/B testing at companies like Google uses hypothesis testing on conversion rates"
+      }
+    ]
+  }
+]
