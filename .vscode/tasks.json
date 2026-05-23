@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start frontend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "group": "build",
+      "presentation": { "panel": "new", "reveal": "always" }
+    },
+    {
+      "label": "Start backend",
+      "type": "shell",
+      "command": "go run main.go",
+      "options": {
+        "cwd": "${workspaceFolder}/backend",
+        "env": { "PORT": "4000" }
+      },
+      "group": "build",
+      "presentation": { "panel": "new", "reveal": "always" }
+    },
+    {
+      "label": "Start all",
+      "dependsOn": ["Start frontend", "Start backend"],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}
