@@ -16,25 +16,27 @@ import (
 func main() {
 	cfg := config.Load()
 
-	// ── Stores ──────────────────────────────────────────────────────────────
+	// Stores
 	subjectRepo  := jsonstore.NewSubjectStore(cfg.DataPath)
 	userRepo     := memstore.NewUserStore()
 	progressRepo := memstore.NewProgressStore()
 	leaderRepo   := memstore.NewLeaderboardStore()
 
-	// ── Services ─────────────────────────────────────────────────────────────
+	// Services — LearningPathService feeds into ExerciseService
 	authSvc      := services.NewAuthService(userRepo, cfg.JWTSecret)
 	subjectSvc   := services.NewSubjectService(subjectRepo)
 	progressSvc  := services.NewProgressService(progressRepo, leaderRepo)
 	leaderSvc    := services.NewLeaderboardService(leaderRepo)
+	pathSvc      := services.NewLearningPathService(progressRepo, subjectRepo)
+	exerciseSvc  := services.NewExerciseService(subjectRepo, progressRepo, pathSvc)
 
-	// ── Controllers ──────────────────────────────────────────────────────────
+	// Controllers
 	authCtrl     := controllers.NewAuthController(authSvc)
 	subjectCtrl  := controllers.NewSubjectController(subjectSvc)
 	progressCtrl := controllers.NewProgressController(progressSvc)
+	exerciseCtrl := controllers.NewExerciseController(exerciseSvc)
 	leaderCtrl   := controllers.NewLeaderboardController(leaderSvc)
 
-	// ── App ───────────────────────────────────────────────────────────────────
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			return c.Status(fiber.StatusInternalServerError).JSON(
@@ -43,13 +45,11 @@ func main() {
 		},
 	})
 
-	// Global middleware — order matters
 	app.Use(middleware.Logger())
 	app.Use(middleware.CORS(cfg.AllowedOrigins))
 	app.Use(middleware.RateLimit(100, time.Minute))
 
-	// Routes
-	router.Setup(app, authCtrl, subjectCtrl, progressCtrl, leaderCtrl)
+	router.Setup(app, authCtrl, subjectCtrl, progressCtrl, exerciseCtrl, leaderCtrl)
 
 	log.Printf("MathForge backend listening on :%s", cfg.Port)
 	log.Fatal(app.Listen(":" + cfg.Port))
