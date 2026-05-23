@@ -111,7 +111,7 @@ function SubjectCard({
       {/* was subject.topicIds / if bug happens its right here */}
       <div className="subject-footer">
         <span className="badge badge-primary">
-          {subject.topicCount ?? subject.id?.length ?? 0} topics 
+          {subject.topicCount ?? subject.topicIds?.length ?? 0} topics 
         </span>
         <span className="badge badge-xp">
           Up to +{formatSalary(maxBoost)} earnings boost

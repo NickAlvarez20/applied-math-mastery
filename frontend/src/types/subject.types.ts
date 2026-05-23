@@ -12,6 +12,7 @@ export interface Subject {
   description: string;
   icon: string;
   topicCount: number;
+  topicIds: string[];
   careers: Career[];
 }
 

@@ -1,6 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import "./styles/pages/landing.css";
+import "./styles/pages/subject-hub.css";
+import "./styles/pages/topic-detail.css";
+import "./styles/pages/forge-mode.css";
+import "./styles/pages/career-explorer.css";
+import "./styles/pages/dashboard.css";
+import "./styles/pages/leaderboard.css";
+import "./styles/pages/achievements.css";
 
 // Apply saved dark mode before first render to avoid flash
 const saved = JSON.parse(localStorage.getItem("mathforge-ui") || "{}");
