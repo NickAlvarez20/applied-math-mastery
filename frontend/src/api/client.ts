@@ -2,7 +2,10 @@ import axios from "axios";
 import { useAuthStore } from "@/store/authStore";
 
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:4000",
+  // Empty in production (same-origin /api); override via VITE_API_URL for local Go server
+  baseURL:
+    import.meta.env.VITE_API_URL ??
+    (import.meta.env.DEV ? "http://localhost:4000" : ""),
   headers: { "Content-Type": "application/json" },
   timeout: 10_000,
 });

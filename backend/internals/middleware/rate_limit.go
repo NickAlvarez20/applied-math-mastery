@@ -1,8 +1,10 @@
 package middleware
 
 import (
+	"strings"
 	"sync"
 	"time"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -16,14 +18,24 @@ var (
 	windowsMu sync.Mutex
 )
 
-func RateLimit(limit int, duration time.Duration) fiber.Handler {
+func clientIP(c *fiber.Ctx) string {
+	if xff := c.Get("X-Forwarded-For"); xff != "" {
+		return strings.TrimSpace(strings.Split(xff, ",")[0])
+	}
+	if xri := c.Get("X-Real-IP"); xri != "" {
+		return strings.TrimSpace(xri)
+	}
+	return c.IP()
+}
+
+func rateLimitHandler(bucket string, limit int, duration time.Duration) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		ip := c.IP()
+		key := bucket + ":" + clientIP(c)
 		windowsMu.Lock()
-		w, ok := windows[ip]
+		w, ok := windows[key]
 		if !ok {
 			w = &window{}
-			windows[ip] = w
+			windows[key] = w
 		}
 		windowsMu.Unlock()
 
@@ -46,4 +58,14 @@ func RateLimit(limit int, duration time.Duration) fiber.Handler {
 		w.requests = append(w.requests, now)
 		return c.Next()
 	}
+}
+
+// RateLimit applies a per-IP sliding window (in-memory; per serverless instance).
+func RateLimit(limit int, duration time.Duration) fiber.Handler {
+	return rateLimitHandler("global", limit, duration)
+}
+
+// StrictRateLimit is for sensitive routes (login, register).
+func StrictRateLimit(limit int, duration time.Duration) fiber.Handler {
+	return rateLimitHandler("auth", limit, duration)
 }

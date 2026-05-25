@@ -1,10 +1,21 @@
 package router
 
 import (
+	"os"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"mathforge/internals/controllers"
 	"mathforge/internals/middleware"
 )
+
+func apiPrefix() string {
+	// Vercel experimentalServices strips routePrefix /api before the request hits the app.
+	if os.Getenv("VERCEL") != "" {
+		return "/v1"
+	}
+	return "/api/v1"
+}
 
 func Setup(
 	app          *fiber.App,
@@ -14,16 +25,16 @@ func Setup(
 	exerciseCtrl *controllers.ExerciseController,
 	leaderCtrl   *controllers.LeaderboardController,
 ) {
-	api := app.Group("/api/v1")
+	api := app.Group(apiPrefix())
 
 	api.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"status": "ok", "app": "MathForge"})
 	})
 
-	// Auth
+	// Auth (stricter rate limit on credential endpoints)
 	auth := api.Group("/auth")
-	auth.Post("/register", authCtrl.Register)
-	auth.Post("/login",    authCtrl.Login)
+	auth.Post("/register", middleware.StrictRateLimit(8, time.Minute), authCtrl.Register)
+	auth.Post("/login", middleware.StrictRateLimit(12, time.Minute), authCtrl.Login)
 	auth.Post("/refresh",  authCtrl.RefreshToken)
 	auth.Delete("/logout", middleware.RequireAuth, authCtrl.Logout)
 

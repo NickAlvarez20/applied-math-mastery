@@ -1,8 +1,8 @@
 package config
 
 import (
-	"log"
 	"os"
+
 	"github.com/joho/godotenv"
 )
 
@@ -20,15 +20,16 @@ func Load() *Config {
 	if instance != nil {
 		return instance
 	}
-	// Only load .env in development — production uses real env vars
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Println("no .env file found, reading from environment")
+	// Local dev only — Vercel injects env vars at runtime
+	if os.Getenv("VERCEL") == "" {
+		_ = godotenv.Load("../.env")
+		_ = godotenv.Load(".env")
 	}
 	instance = &Config{
 		Port:           getEnv("PORT", "4000"),
 		JWTSecret:      getEnv("JWT_SECRET", "change-me"),
 		AllowedOrigins: getEnv("ALLOWED_ORIGINS", "http://localhost:5173"),
-		DataPath:       getEnv("DATA_PATH", "./data"),
+		DataPath:       getEnv("DATA_PATH", defaultDataPath()),
 	}
 	return instance
 }
@@ -46,4 +47,11 @@ func getEnv(key, fallback string) string {
 		return v
 	}
 	return fallback
+}
+
+func defaultDataPath() string {
+	if _, err := os.Stat("./data"); err == nil {
+		return "./data"
+	}
+	return "data"
 }
