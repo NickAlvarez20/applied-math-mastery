@@ -15,13 +15,9 @@
       "maxDuration": 10
     }
   },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/_/backend/$1" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ],
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/_/backend/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store" }
       ]

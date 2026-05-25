@@ -2,36 +2,39 @@
 
 ## Requirements
 
-- Project **Framework Preset**: **Services** (required when using `experimentalServices` in `vercel.json`)
-- Deploy from the **repo root**
+- Project **Framework Preset**: **Services**
+- `experimentalServices` in root `vercel.json`
+- Deploy from repo root
 
-## Architecture
+## Routing
 
-| Service | Mount | Public URLs |
-|---------|-------|-------------|
-| `frontend` (Vite) | `/` | App UI, SPA routes |
-| `backend` (Go) | `/_/backend` (internal) | `/api/*` via rewrite |
+| Service | `routePrefix` | Client calls |
+|---------|---------------|--------------|
+| frontend (Vite) | `/` | UI |
+| backend (Go) | `/_/backend` | `/_/backend/v1/...` |
 
-Public API: `/api/v1/...` → rewritten to `/_/backend/v1/...` → Go Fiber app.
+Do **not** call `/api/v1/...` in production — that path is not owned by the Go service and Vercel serves `index.html` (POST → 405).
 
-## Environment variables
+The frontend uses `src/api/paths.ts` (`VITE_API_PREFIX=/_/backend` in `.env.production`).
+
+## Environment variables (Vercel dashboard)
 
 | Variable | Example |
 |----------|---------|
 | `JWT_SECRET` | long random string |
 | `ALLOWED_ORIGINS` | `https://appliedmathmastery.vercel.app` |
 
-## After deploy, verify
+## Verify after deploy
 
-- `GET /api/v1/health` → JSON `{"status":"ok",...}` (not the React 404 page)
-- `GET /api/v1/subjects` → JSON with subject list
-- `POST /api/v1/auth/register` → 201, not 405
+- `GET https://your-app.vercel.app/_/backend/v1/health` → JSON
+- `GET https://your-app.vercel.app/_/backend/v1/subjects` → JSON with subjects
+- Sign-up in the app (network tab should show `POST .../_/backend/v1/auth/register`)
 
-## Local development
+## Local dev
 
 ```bash
 cd backend && go run .
 cd frontend && npm run dev
 ```
 
-API at `http://localhost:4000/api/v1/...` (Vite proxies `/api` in dev).
+Uses `/api/v1/...` via Vite proxy (see `vite.config.ts`).

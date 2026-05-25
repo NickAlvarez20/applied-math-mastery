@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import client from "@/api/client";
+import { apiV1 } from "@/api/paths";
 import { formatXP } from "@/utils/formatters";
 import type { APIResponse } from "@/types/api.types";
 import "@/styles/pages/leaderboard.css";
@@ -31,7 +32,7 @@ export default function Leaderboard() {
     setError(null);
     client
       .get<APIResponse<LeaderboardEntry[]>>(
-        `/api/v1/leaderboard/${tab === "global" ? "global" : "weekly"}`,
+        apiV1(`/leaderboard/${tab === "global" ? "global" : "weekly"}`),
       )
       .then((res) => setEntries(res.data.data ?? []))
       .catch(() =>

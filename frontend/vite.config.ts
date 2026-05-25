@@ -15,10 +15,15 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // Proxies /api calls to Go backend during dev
       "/api": {
         target: "http://localhost:4000",
         changeOrigin: true,
+      },
+      // Same mount path as Vercel production (/_/backend)
+      "/_/backend": {
+        target: "http://localhost:4000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/_\/backend/, "/api"),
       },
     },
   },

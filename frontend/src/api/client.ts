@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/store/authStore";
 
 const client = axios.create({
-  // Empty in production (same-origin /api); override via VITE_API_URL for local Go server
+  // Same-origin; paths use apiV1() → /_/backend/v1 on Vercel, /api/v1 in dev
   baseURL:
     import.meta.env.VITE_API_URL ??
     (import.meta.env.DEV ? "http://localhost:4000" : ""),

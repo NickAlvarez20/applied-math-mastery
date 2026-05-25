@@ -1,4 +1,5 @@
 import client from "./client";
+import { apiV1 } from "./paths";
 import type {
   User,
   AuthTokens,
@@ -13,15 +14,15 @@ interface AuthResponse {
 
 export const authAPI = {
   register: (payload: RegisterPayload) =>
-    client.post<AuthResponse>("/api/v1/auth/register", payload),
+    client.post<AuthResponse>(apiV1("/auth/register"), payload),
 
   login: (payload: LoginPayload) =>
-    client.post<AuthResponse>("/api/v1/auth/login", payload),
+    client.post<AuthResponse>(apiV1("/auth/login"), payload),
 
-  logout: () => client.delete("/api/v1/auth/logout"),
+  logout: () => client.delete(apiV1("/auth/logout")),
 
   refresh: (refreshToken: string) =>
-    client.post<{ tokens: AuthTokens }>("/api/v1/auth/refresh", {
+    client.post<{ tokens: AuthTokens }>(apiV1("/auth/refresh"), {
       refreshToken,
     }),
 };
