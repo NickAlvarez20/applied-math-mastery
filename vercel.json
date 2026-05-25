@@ -1,23 +1,23 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "experimentalServices": {
-    "frontend": {
-      "root": "frontend",
-      "routePrefix": "/",
-      "framework": "vite"
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/handler.go",
+      "use": "@vercel/go"
     },
-    "backend": {
-      "root": "backend",
-      "routePrefix": "/api",
-      "entrypoint": "main.go",
-      "framework": "go",
-      "memory": 512,
-      "maxDuration": 10
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/_/backend" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/backend/handler.go" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/frontend/dist/index.html" }
   ],
   "headers": [
     {

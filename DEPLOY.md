@@ -2,13 +2,13 @@
 
 ## Architecture
 
-- **Frontend**: Vite static app at `/`
-- **Backend**: Go serverless service at `/api` (in-memory stores; resets on cold start)
+- **Frontend**: Vite static app at `/` (`frontend/dist`)
+- **Backend**: Go serverless function (`backend/handler.go`) — all `/api/*` routes
 - **No database** — users, progress, and leaderboard live in RAM per instance
 
 ## Vercel project settings
 
-1. Set the project **Framework Preset** to **Services** (required for `experimentalServices`).
+1. Deploy from the **repo root** (where `vercel.json` lives). Framework preset can stay **Other** or **Vite**; routing is defined in `vercel.json`.
 2. Add environment variables:
 
 | Variable | Example | Required |
