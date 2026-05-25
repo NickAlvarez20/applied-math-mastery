@@ -1,37 +1,37 @@
 # Deploy MathForge on Vercel
 
+## Requirements
+
+- Project **Framework Preset**: **Services** (required when using `experimentalServices` in `vercel.json`)
+- Deploy from the **repo root**
+
 ## Architecture
 
-- **Frontend**: Vite static app at `/` (`frontend/dist`)
-- **Backend**: Go serverless function (`backend/handler.go`) — all `/api/*` routes
-- **No database** — users, progress, and leaderboard live in RAM per instance
+| Service | Mount | Public URLs |
+|---------|-------|-------------|
+| `frontend` (Vite) | `/` | App UI, SPA routes |
+| `backend` (Go) | `/_/backend` (internal) | `/api/*` via rewrite |
 
-## Vercel project settings
+Public API: `/api/v1/...` → rewritten to `/_/backend/v1/...` → Go Fiber app.
 
-1. Deploy from the **repo root** (where `vercel.json` lives). Framework preset can stay **Other** or **Vite**; routing is defined in `vercel.json`.
-2. Add environment variables:
+## Environment variables
 
-| Variable | Example | Required |
-|----------|---------|----------|
-| `JWT_SECRET` | long random string | Yes |
-| `ALLOWED_ORIGINS` | `https://your-app.vercel.app` | Yes (comma-separated for multiple) |
-| `DATA_PATH` | `./data` | Optional (default resolves `data/`) |
+| Variable | Example |
+|----------|---------|
+| `JWT_SECRET` | long random string |
+| `ALLOWED_ORIGINS` | `https://appliedmathmastery.vercel.app` |
 
-3. Deploy from the repo root (where `vercel.json` lives).
+## After deploy, verify
+
+- `GET /api/v1/health` → JSON `{"status":"ok",...}` (not the React 404 page)
+- `GET /api/v1/subjects` → JSON with subject list
+- `POST /api/v1/auth/register` → 201, not 405
 
 ## Local development
 
 ```bash
-# Terminal 1 — API
 cd backend && go run .
-
-# Terminal 2 — UI (proxies /api → :4000)
 cd frontend && npm run dev
 ```
 
-## Rate limits (in-memory)
-
-- **Global**: 60 requests / minute / IP
-- **Auth** (login/register): 8–12 requests / minute / IP (separate bucket)
-
-Limits apply per serverless instance, not globally across regions.
+API at `http://localhost:4000/api/v1/...` (Vite proxies `/api` in dev).
