@@ -20,7 +20,7 @@
 
 ## About
 
-Applied Math Mastery is a free, open-source math learning platform that helps students build real mastery—not just memorization. It connects algebra, calculus, statistics, geometry, etc. to careers, salary impact, and everyday applications. Visit https://www.appliedmathmastery.vercel.app for the live deployment. 
+Applied Math Mastery is a free, open-source math learning platform that helps students build real mastery—not just memorization. It connects algebra, calculus, statistics, geometry, etc. to careers, salary impact, and everyday applications. Visit https://appliedmathmastery.vercel.app for the live deployment. 
 
 The app is a full-stack web project: a **React + TypeScript** frontend (Vite) talks to a **Go** REST API (Fiber). Learners browse subjects and topics, study concepts in **Forge Mode**, complete adaptive exercises, track XP and streaks, unlock achievements, and compete on global leaderboards.
 
