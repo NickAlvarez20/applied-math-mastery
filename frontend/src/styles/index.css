@@ -318,3 +318,9 @@ input, textarea, select {
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-xl);
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+}

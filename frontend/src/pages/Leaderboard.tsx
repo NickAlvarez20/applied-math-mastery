@@ -1,24 +1,42 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
-
+import client from "@/api/client";
 import { formatXP } from "@/utils/formatters";
-
+import type { APIResponse } from "@/types/api.types";
 import "@/styles/pages/leaderboard.css";
+
+interface LeaderboardEntry {
+  rank?: number;
+  userId: string;
+  username?: string;
+  xp?: number;
+  level?: number;
+  streak?: number;
+}
+
+function avatarInitial(username?: string): string {
+  const letter = (username?.trim() || "?")[0];
+  return letter.toUpperCase();
+}
 
 export default function Leaderboard() {
   const { user } = useAuthStore();
-  const [entries, setEntries] = useState<any[]>([]);
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [tab, setTab] = useState<"global" | "weekly">("global");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    // Leaderboard is public — no auth required
-    fetch(
-      `${import.meta.env.VITE_API_URL ?? "http://localhost:4000"}/api/v1/leaderboard/${tab}`,
-    )
-      .then((r) => r.json())
-      .then((d) => setEntries(d.data ?? []))
+    setError(null);
+    client
+      .get<APIResponse<LeaderboardEntry[]>>(
+        `/api/v1/leaderboard/${tab === "global" ? "global" : "weekly"}`,
+      )
+      .then((res) => setEntries(res.data.data ?? []))
+      .catch(() =>
+        setError("Could not load rankings — is the backend running?"),
+      )
       .finally(() => setLoading(false));
   }, [tab]);
 
@@ -30,11 +48,12 @@ export default function Leaderboard() {
           <p className="lb-subtitle">Top learners ranked by XP earned.</p>
         </div>
 
-        <div className="lb-tabs">
+        <div className="lb-tabs tab-bar">
           {(["global", "weekly"] as const).map((t) => (
             <button
               key={t}
-              className={`topic-tab ${tab === t ? "topic-tab--active" : ""}`}
+              type="button"
+              className={`tab-btn ${tab === t ? "tab-btn--active" : ""}`}
               onClick={() => setTab(t)}
             >
               {t === "global" ? "🌍 All-time" : "📅 This week"}
@@ -44,6 +63,10 @@ export default function Leaderboard() {
 
         {loading ? (
           <div className="lb-loading">Loading rankings…</div>
+        ) : error ? (
+          <div className="lb-empty">
+            <p>{error}</p>
+          </div>
         ) : entries.length === 0 ? (
           <div className="lb-empty">
             <p>No rankings yet — complete topics to appear here!</p>
@@ -52,7 +75,7 @@ export default function Leaderboard() {
           <div className="lb-list">
             {entries.map((e, i) => (
               <div
-                key={e.userId}
+                key={e.userId || i}
                 className={`lb-row card ${e.userId === user?.id ? "lb-row--me" : ""} ${i < 3 ? `lb-row--top${i + 1}` : ""}`}
               >
                 <div className="lb-rank">
@@ -64,12 +87,10 @@ export default function Leaderboard() {
                         ? "🥉"
                         : `#${e.rank ?? i + 1}`}
                 </div>
-                <div className="lb-avatar">
-                  {(e.username ?? "?")[0].toUpperCase()}
-                </div>
+                <div className="lb-avatar">{avatarInitial(e.username)}</div>
                 <div className="lb-user-info">
                   <span className="lb-username">
-                    {e.username ?? "Anonymous"}
+                    {e.username?.trim() || "Anonymous"}
                   </span>
                   {e.userId === user?.id && (
                     <span className="lb-you-badge">You</span>

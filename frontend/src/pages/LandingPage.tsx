@@ -4,9 +4,9 @@ import { useUIStore } from "@/store/uiStore";
 import "@/styles/pages/landing.css";
 
 const stats = [
-  { value: "4 Subjects", label: "Fully covered" },
-  { value: "20+ Topics", label: "With real-world context" },
-  { value: "$30k+", label: "Avg salary boost" },
+  { value: "15 Subjects", label: "Fully covered" },
+  { value: "100+ Topics", label: "With real-world context" },
+  { value: "$30k+", label: "Average salary boost" },
   { value: "100% Free", label: "Open source" },
 ];
 
@@ -14,7 +14,7 @@ const features = [
   {
     icon: "🧠",
     title: "Forge Mode learning",
-    desc: "Concepts taught through stories, visual simulations, and real-world applications — never rote memorisation.",
+    desc: "Concepts taught through stories, visual simulations, and real-world applications without boring rote memorization.",
   },
   {
     icon: "💼",
@@ -24,7 +24,7 @@ const features = [
   {
     icon: "⚠️",
     title: "Pitfall decoder",
-    desc: "Animated breakdowns of where 70–80% of students get stuck — and the exact fix strategy.",
+    desc: "Animated breakdowns of where 70–80% of students get stuck and the exact fix strategy.",
   },
   {
     icon: "🎮",
@@ -73,14 +73,21 @@ export default function LandingPage() {
         <div className="hero-inner">
           <div className="hero-badge">🚀 Free and open source</div>
           <h1 className="hero-title">
-            Math doesn't just open doors.
-            <span className="hero-title-highlight"> It builds them.</span>
+            Bad at math? Not anymore!
+            <span className="hero-title-highlight">
+              {" "}
+              Earn More, Have Fun
+            </span>
+            <span className="hero-title-highlight">
+              {" "}
+              Math Learning System Designed by an Ace
+            </span>
           </h1>
           <p className="hero-subtitle">
-            MathForge teaches you why math matters, where it's used in the real
-            world, and exactly how much it can boost your career earnings —
-            through an entirely new learning system built around understanding,
-            not memorisation.
+            Applied Math Mastery teaches you why math matters while having fun, where it's used
+            in the real world, and exactly how much it can boost your career
+            earnings through an entirely new learning system built around
+            understanding, not memorization.
           </p>
           <div className="hero-actions">
             {user ? (
@@ -93,7 +100,7 @@ export default function LandingPage() {
                   className="btn btn-primary btn-lg"
                   onClick={() => openAuthModal("register")}
                 >
-                  Start for free →
+                  Sign-Up Here for free →
                 </button>
                 <Link to="/subjects" className="btn btn-secondary btn-lg">
                   Browse subjects
@@ -122,10 +129,11 @@ export default function LandingPage() {
       <section className="pitfalls-section">
         <div className="container">
           <div className="section-header">
-            <h2>Where most students hit a wall</h2>
+            <h2>Understanding the Most Common Areas People Get Confused On</h2>
             <p>
-              MathForge maps every common misconception and teaches you the
-              exact mental model that fixes it permanently.
+              Applied Math Mastery hones in on every common confusing concept
+              and teaches you the most critical fundamentals to learn that
+              accelerate your mastery and boost long-term learning retention.
             </p>
           </div>
           <div className="pitfalls-grid">
@@ -152,8 +160,12 @@ export default function LandingPage() {
       <section className="features-section">
         <div className="container">
           <div className="section-header">
-            <h2>A new way to learn math</h2>
-            <p>Everything you need to go from confused to career-ready.</p>
+            <h2>Boost your morale and find your why. </h2>
+            <p>
+              Everything you need to go from confused to career-ready. This
+              keeps you aware of how mastering the math will benefit you in the
+              long-run and help you discover a career you love!
+            </p>
           </div>
           <div className="features-grid">
             {features.map((f) => (
@@ -171,10 +183,10 @@ export default function LandingPage() {
       <section className="cta-section">
         <div className="container">
           <div className="cta-box">
-            <h2 className="cta-title">Ready to forge your math skills?</h2>
+            <h2 className="cta-title">Ready to apply your math skills?</h2>
             <p className="cta-subtitle">
-              Join thousands of learners building real understanding — free
-              forever.
+              Join thousands of learners building real understanding with an
+              innovated system of learning free of costs!
             </p>
             <div className="cta-actions">
               {user ? (
@@ -196,7 +208,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

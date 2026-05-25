@@ -56,6 +56,15 @@
   font-size: var(--text-xl);
 }
 
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    max-width: 9.5rem;
+    white-space: normal;
+  }
+}
+
 .navbar-links {
   display: none;
   align-items: center;

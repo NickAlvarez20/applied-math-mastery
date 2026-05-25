@@ -7,12 +7,17 @@ import (
 )
 
 type ProgressService struct {
-	repo        store.ProgressRepository
-	leaderRepo  store.LeaderboardRepository
+	repo       store.ProgressRepository
+	leaderRepo store.LeaderboardRepository
+	userRepo   store.UserRepository
 }
 
-func NewProgressService(r store.ProgressRepository, l store.LeaderboardRepository) *ProgressService {
-	return &ProgressService{repo: r, leaderRepo: l}
+func NewProgressService(
+	r store.ProgressRepository,
+	l store.LeaderboardRepository,
+	u store.UserRepository,
+) *ProgressService {
+	return &ProgressService{repo: r, leaderRepo: l, userRepo: u}
 }
 
 func (s *ProgressService) GetAll(userID string) ([]models.TopicProgress, error) {
@@ -72,10 +77,20 @@ func (s *ProgressService) Submit(userID, topicID string, score, xp int) error {
 	s.repo.SaveStreak(streak)
 
 	// Update leaderboard
+	username := "Learner"
+	if user, err := s.userRepo.FindByID(userID); err == nil && user.Username != "" {
+		username = user.Username
+	}
+	totalXP := xp
+	if existing, err := s.leaderRepo.GetRank(userID); err == nil {
+		totalXP = existing.XP + xp
+	}
 	s.leaderRepo.UpsertEntry(&models.LeaderboardEntry{
-		UserID: userID,
-		XP:     xp,
-		Streak: streak.Current,
+		UserID:   userID,
+		Username: username,
+		XP:       totalXP,
+		Level:    xpLevel(totalXP),
+		Streak:   streak.Current,
 	})
 	return nil
 }
@@ -100,4 +115,11 @@ func (s *ProgressService) ClaimDaily(userID string) (int, error) {
 		ClaimedAt: &now,
 	})
 	return xp, nil
+}
+
+func xpLevel(xp int) int {
+	if xp < 500 {
+		return 1
+	}
+	return 1 + xp/500
 }

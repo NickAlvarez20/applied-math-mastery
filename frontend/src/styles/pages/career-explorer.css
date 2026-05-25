@@ -41,6 +41,7 @@
   box-shadow: var(--shadow-sm);
 }
 
+
 .explorer-search {
   flex: 1;
   min-width: 220px;

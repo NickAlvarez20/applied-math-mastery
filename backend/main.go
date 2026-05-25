@@ -25,7 +25,7 @@ func main() {
 	// Services — LearningPathService feeds into ExerciseService
 	authSvc      := services.NewAuthService(userRepo, cfg.JWTSecret)
 	subjectSvc   := services.NewSubjectService(subjectRepo)
-	progressSvc  := services.NewProgressService(progressRepo, leaderRepo)
+	progressSvc  := services.NewProgressService(progressRepo, leaderRepo, userRepo)
 	leaderSvc    := services.NewLeaderboardService(leaderRepo)
 	pathSvc      := services.NewLearningPathService(progressRepo, subjectRepo)
 	exerciseSvc  := services.NewExerciseService(subjectRepo, progressRepo, pathSvc)

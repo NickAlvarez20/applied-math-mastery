@@ -30,7 +30,7 @@ export default function AuthModal({ onClose, initialMode = "login" }: Props) {
           accessToken: res.data.token,
           refreshToken: "",
         });
-        addToast(`Welcome to MathForge, ${username}!`, "success");
+        addToast(`Welcome to Applied Math Mastery, ${username}!`, "success");
       } else {
         const res = await authAPI.login({ email, password });
         setAuth(res.data.data, {

@@ -62,6 +62,7 @@ export default function CareerExplorer() {
         <div className="explorer-controls">
           <input
             className="form-input explorer-search"
+            style={{ paddingLeft: "40px" }}
             type="text"
             placeholder="Search careers or subjects…"
             value={filter}

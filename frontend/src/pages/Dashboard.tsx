@@ -67,8 +67,6 @@ export default function Dashboard() {
             <div className="dash-streak-label">day streak</div>
           </div>
         </div>
-        // Add this block directly below the dash-welcome section, before
-        dash-stats:
         <div style={{ marginBottom: "var(--space-6)" }}>
           <DailyChallenge />
         </div>

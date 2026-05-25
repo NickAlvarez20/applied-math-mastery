@@ -49,7 +49,7 @@ export default function Navbar() {
             <span className="navbar-logo-icon" aria-hidden>
               ⚡
             </span>
-            MathForge
+            Applied Math Mastery
           </Link>
 
           <div className="navbar-links">
