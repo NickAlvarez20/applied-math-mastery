@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	appdata "mathforge/data"
 	"mathforge/config"
 	"mathforge/internals/controllers"
 	"mathforge/internals/middleware"
@@ -30,7 +31,10 @@ func App() *fiber.App {
 func build() *fiber.App {
 	cfg := config.Load()
 
-	subjectRepo := jsonstore.NewSubjectStore(cfg.DataPath)
+	subjectRepo := jsonstore.NewSubjectStoreFromFS(appdata.FS, ".")
+	if !subjectRepo.Loaded() {
+		subjectRepo = jsonstore.NewSubjectStore(cfg.DataPath)
+	}
 	userRepo := memstore.NewUserStore()
 	progressRepo := memstore.NewProgressStore()
 	leaderRepo := memstore.NewLeaderboardStore()
@@ -58,6 +62,7 @@ func build() *fiber.App {
 		},
 	})
 
+	f.Use(middleware.NormalizeAPIPrefix())
 	f.Use(middleware.Logger())
 	f.Use(middleware.CORS(cfg.AllowedOrigins))
 	// Global limit — in-memory per instance; resets on cold start (no external store).

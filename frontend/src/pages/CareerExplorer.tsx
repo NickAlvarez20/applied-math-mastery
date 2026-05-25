@@ -21,9 +21,16 @@ export default function CareerExplorer() {
   const [filter, setFilter] = useState("");
   const [sortBy, setSortBy] = useState<"salary" | "boost">("boost");
 
+  const [loadError, setLoadError] = useState<string | null>(null);
+
   useEffect(() => {
     if (subjects.length > 0) return;
-    subjectsAPI.list().then((res) => setSubjects(res.data.data));
+    subjectsAPI
+      .list()
+      .then((res) => setSubjects(res.data.data ?? []))
+      .catch(() =>
+        setLoadError("Could not load careers — is the API running?"),
+      );
   }, []);
 
   const allCareers: CareerWithSubject[] = subjects.flatMap((s) =>
@@ -57,6 +64,12 @@ export default function CareerExplorer() {
             premium mastery brings.
           </p>
         </div>
+
+        {loadError && (
+          <p className="hub-error" style={{ marginBottom: "var(--space-6)" }}>
+            {loadError}
+          </p>
+        )}
 
         {/* Controls */}
         <div className="explorer-controls">

@@ -12,12 +12,11 @@
       "entrypoint": "main.go",
       "framework": "go",
       "memory": 512,
-      "maxDuration": 10,
-      "includeFiles": "data/**"
+      "maxDuration": 10
     }
   },
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/_/backend/:path*" },
+    { "source": "/api/(.*)", "destination": "/_/backend" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [

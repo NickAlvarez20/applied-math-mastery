@@ -1,21 +1,12 @@
 package router
 
 import (
-	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"mathforge/internals/controllers"
 	"mathforge/internals/middleware"
 )
-
-func apiPrefix() string {
-	// Vercel experimentalServices strips routePrefix /api before the request hits the app.
-	if os.Getenv("VERCEL") != "" {
-		return "/v1"
-	}
-	return "/api/v1"
-}
 
 func Setup(
 	app          *fiber.App,
@@ -25,7 +16,7 @@ func Setup(
 	exerciseCtrl *controllers.ExerciseController,
 	leaderCtrl   *controllers.LeaderboardController,
 ) {
-	api := app.Group(apiPrefix())
+	api := app.Group("/api/v1")
 
 	api.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"status": "ok", "app": "MathForge"})
@@ -38,7 +29,8 @@ func Setup(
 	auth.Post("/refresh",  authCtrl.RefreshToken)
 	auth.Delete("/logout", middleware.RequireAuth, authCtrl.Logout)
 
-	// Subjects (public)
+	// Subjects (public) — register with and without trailing slash
+	api.Get("/subjects", subjectCtrl.ListSubjects)
 	subjects := api.Group("/subjects")
 	subjects.Get("/",                subjectCtrl.ListSubjects)
 	subjects.Get("/topics/:topicId", subjectCtrl.GetTopic)
