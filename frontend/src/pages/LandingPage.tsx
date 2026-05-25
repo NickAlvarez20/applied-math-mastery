@@ -74,7 +74,13 @@ export default function LandingPage() {
           <div className="hero-badge">🚀 Free and open source</div>
           <h1 className="hero-title">
             Bad at math? Not anymore!
-            <span className="hero-title-highlight">
+            <span
+              className="hero-title-highlight"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, rgb(60, 255, 0) 0%, rgb(0, 238, 255) 100%)",
+              }}
+            >
               {" "}
               Earn More, Have Fun
             </span>
@@ -84,10 +90,10 @@ export default function LandingPage() {
             </span>
           </h1>
           <p className="hero-subtitle">
-            Applied Math Mastery teaches you why math matters while having fun, where it's used
-            in the real world, and exactly how much it can boost your career
-            earnings through an entirely new learning system built around
-            understanding, not memorization.
+            Applied Math Mastery teaches you why math matters while having fun,
+            where it's used in the real world, and exactly how much it can boost
+            your career earnings through an entirely new learning system built
+            around understanding, not memorization.
           </p>
           <div className="hero-actions">
             {user ? (
