@@ -4,6 +4,13 @@
   background-color: var(--color-bg);
   background-image: var(--gradient-mesh);
   background-attachment: fixed;
+  overflow-x: clip;
+}
+
+.career-explorer .container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .explorer-header {
@@ -67,7 +74,6 @@
 
 .careers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-5);
 }
 
@@ -76,6 +82,10 @@
   flex-direction: column;
   gap: var(--space-4);
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .career-card-top {
@@ -189,4 +199,49 @@
 
 .explorer-empty p {
   margin: 0;
+}
+
+@media (max-width: 640px) {
+  .career-explorer {
+    padding: var(--space-8) 0 var(--space-12);
+  }
+
+  .explorer-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-4);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .explorer-search {
+    width: 100%;
+    min-width: 0;
+    flex: none;
+  }
+
+  .explorer-sort {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .career-salaries {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .career-salary-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .career-salary-item {
+    padding: 0;
+  }
+
+  .career-salary-item--boost {
+    text-align: left;
+  }
 }

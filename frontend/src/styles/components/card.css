@@ -29,3 +29,13 @@
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+@media (max-width: 640px) {
+  .card {
+    padding: var(--space-4);
+  }
+
+  .card-hover:hover {
+    transform: none;
+  }
+}

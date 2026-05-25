@@ -4,6 +4,13 @@
   background-color: var(--color-bg);
   background-image: var(--gradient-mesh);
   background-attachment: fixed;
+  overflow-x: clip;
+}
+
+.subject-hub .container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hub-header {
@@ -30,7 +37,6 @@
 
 .subjects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-5);
 }
 
@@ -40,6 +46,10 @@
   flex-direction: column;
   gap: var(--space-5);
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .subject-card:focus {
@@ -106,7 +116,7 @@
   font-weight: 600;
   color: var(--color-text);
   flex: 1;
-  min-width: 120px;
+  min-width: 0;
 }
 
 .career-teaser-salary {
@@ -191,4 +201,28 @@
   align-items: center;
   gap: var(--space-2);
   flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .subject-hub {
+    padding: var(--space-8) 0 var(--space-12);
+  }
+
+  .subject-card-top {
+    flex-wrap: wrap;
+  }
+
+  .topic-row {
+    flex-wrap: wrap;
+    padding: var(--space-4);
+  }
+
+  .topic-row:hover {
+    transform: none;
+  }
+
+  .topic-row-meta {
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }

@@ -319,8 +319,42 @@ input, textarea, select {
   border-radius: var(--radius-xl);
 }
 
+/* Subject & career card grids — prevent horizontal overflow on narrow screens */
+.subjects-grid,
+.careers-grid {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, 17.5rem), 1fr)
+  );
+  justify-items: stretch;
+}
+
+.subjects-grid > *,
+.careers-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0 var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .subjects-grid,
+  .careers-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--space-4);
+  }
+
+  .subjects-grid .subject-card,
+  .careers-grid .career-card {
+    width: 100%;
+    max-width: 100%;
   }
 }
