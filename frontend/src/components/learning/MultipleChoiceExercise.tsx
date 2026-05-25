@@ -2,6 +2,7 @@ import { useState } from "react";
 import { cn } from "@/utils/cn";
 import type { Exercise, ExerciseResult } from "@/types/exercise.types";
 import "@/styles/components/exercise.css";
+// comment
 
 interface Props {
   exercise: Exercise;
