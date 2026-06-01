@@ -176,10 +176,12 @@ function SubjectCard({
       {topCareer && (
         <div className="subject-career-teaser">
           <span className="career-teaser-label">Top career</span>
-          <span className="career-teaser-role">{topCareer.title}</span>
-          <span className="career-teaser-salary">
-            {formatSalary(topCareer.avgSalaryUSD)}/yr
-          </span>
+          <div className="career-teaser-details">
+            <span className="career-teaser-role">{topCareer.title}</span>
+            <span className="career-teaser-salary">
+              {formatSalary(topCareer.avgSalaryUSD)}/yr
+            </span>
+          </div>
         </div>
       )}
       {/* was subject.topicIds / if bug happens its right here */}

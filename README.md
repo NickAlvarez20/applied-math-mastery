@@ -56,7 +56,7 @@ Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/NickAlvarez20/applied-math-mastery.git
-cd mathforge
+cd applied-math-mastery
 ```
 
 ### Backend setup
@@ -158,10 +158,10 @@ This repository is open and free for educational use. It is hosted online at app
 
 ## Credits & Acknowledgements
 
-This project was created by [NickAlvarez20](https://github.com/NickAlvarez20) as part of my journey to learn **Go** and **TypeScript/React** full-stack development. Check out my other repositories to see more of my work!
+This project was created by [NickAlvarez20](https://github.com/NickAlvarez20) as part of my journey to learn **Go** and **TypeScript/React** full-stack development. View the source at [applied-math-mastery](https://github.com/NickAlvarez20/applied-math-mastery) or explore more of my work on GitHub.
 
 Built with [Go Fiber](https://gofiber.io/), [React](https://react.dev/), [Vite](https://vitejs.dev/), [Zustand](https://zustand.docs.pmnd.rs/), and [Plotly.js](https://plotly.com/javascript/).
 
 ## Contact
 
-You can find more of my work at [NickAlvarez20 on GitHub](https://github.com/NickAlvarez20).
+You can find this project at [NickAlvarez20/applied-math-mastery](https://github.com/NickAlvarez20/applied-math-mastery) and more of my work at [NickAlvarez20 on GitHub](https://github.com/NickAlvarez20).

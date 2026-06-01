@@ -25,7 +25,7 @@ interface UIState {
 export const useUIStore = create<UIState>()(
   persist(
     (set, get) => ({
-      theme: "light",
+      theme: "dark",
       sidebarOpen: false,
       toasts: [],
       authModal: null,
@@ -61,6 +61,16 @@ export const useUIStore = create<UIState>()(
     }),
     {
       name: "mathforge-ui",
+      version: 1,
+      migrate: (persistedState, version) => {
+        const state = (persistedState ?? {}) as { theme?: "light" | "dark" };
+        if (version < 1) {
+          return { theme: "dark" as const };
+        }
+        return {
+          theme: state.theme === "light" ? "light" : "dark",
+        };
+      },
       partialize: (s) => ({ theme: s.theme }),
     },
   ),

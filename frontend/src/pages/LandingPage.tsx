@@ -86,7 +86,8 @@ export default function LandingPage() {
             </span>
             <span className="hero-title-highlight">
               {" "}
-              Math Learning System Designed by an Ace
+              Math Learning System Designed by an{" "}
+              <span className="hero-title-ace">Ace</span>
             </span>
           </h1>
           <p className="hero-subtitle">
@@ -106,7 +107,7 @@ export default function LandingPage() {
                   className="btn btn-primary btn-lg"
                   onClick={() => openAuthModal("register")}
                 >
-                  Sign-Up Here for free →
+                  Sign-Up for free →
                 </button>
                 <Link to="/subjects" className="btn btn-secondary btn-lg">
                   Browse subjects

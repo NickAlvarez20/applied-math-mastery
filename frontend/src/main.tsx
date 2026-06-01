@@ -17,7 +17,10 @@ import "./styles/components/daily-challenge.css";
 
 // Apply saved theme before first render to avoid flash
 const saved = JSON.parse(localStorage.getItem("mathforge-ui") || "{}");
-const savedTheme = saved?.state?.theme === "dark" ? "dark" : "light";
+const storedVersion = saved?.version ?? 0;
+const storedTheme = saved?.state?.theme;
+const savedTheme =
+  storedVersion >= 1 && storedTheme === "light" ? "light" : "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
 // Global styles
@@ -26,6 +29,7 @@ import "./styles/components/button.css";
 import "./styles/components/card.css";
 import "./styles/components/badge.css";
 import "./styles/components/navbar.css";
+import "./styles/components/footer.css";
 import "./styles/components/modal.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

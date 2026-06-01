@@ -64,6 +64,14 @@
   background-clip: text;
 }
 
+.hero-title-ace {
+  background: linear-gradient(135deg, rgb(60, 255, 0) 0%, rgb(0, 238, 255) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 .hero-subtitle {
   font-size: clamp(var(--text-base), 2vw, var(--text-lg));
   color: var(--color-text-muted);

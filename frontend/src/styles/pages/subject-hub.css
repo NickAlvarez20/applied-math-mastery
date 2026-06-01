@@ -11,12 +11,17 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hub-header {
   text-align: center;
   margin-bottom: var(--space-10);
   padding-top: var(--space-2);
+  width: min(80vw, 100%);
+  max-width: min(80vw, 100%);
 }
 
 .hub-title {
@@ -35,21 +40,38 @@
   line-height: 1.65;
 }
 
-.subjects-grid {
+.subject-hub .subjects-grid {
   display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
   gap: var(--space-5);
+  width: min(80vw, calc(100% - (var(--space-4) * 2)));
+  max-width: min(80vw, calc(100% - (var(--space-4) * 2)));
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.subject-hub .subjects-grid .subject-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  margin-inline: 0;
+  overflow: hidden;
 }
 
 .subject-card {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
   height: 100%;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  min-height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .subject-card:focus {
@@ -61,6 +83,16 @@
   display: flex;
   gap: var(--space-4);
   align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+  min-height: 9rem;
+  flex-shrink: 0;
+}
+
+.subject-info {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .subject-icon {
@@ -69,6 +101,7 @@
   flex-shrink: 0;
   width: 56px;
   height: 56px;
+  min-width: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,6 +116,8 @@
   letter-spacing: -0.02em;
   color: var(--color-text);
   margin-bottom: var(--space-2);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .subject-desc {
@@ -90,17 +125,31 @@
   color: var(--color-text-muted);
   line-height: 1.7;
   margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .subject-career-teaser {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 8rem;
+  height: 8rem;
+  min-height: 8rem;
+  max-height: 8rem;
+  align-self: stretch;
+  box-sizing: border-box;
   padding: var(--space-4);
   background: linear-gradient(135deg, var(--color-success-light), var(--color-bg-secondary));
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .career-teaser-label {
@@ -109,14 +158,38 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 700;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  flex-shrink: 0;
+}
+
+.career-teaser-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-1);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .career-teaser-role {
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-text);
-  flex: 1;
-  min-width: 0;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .career-teaser-salary {
@@ -124,22 +197,49 @@
   font-weight: 800;
   color: var(--color-success);
   letter-spacing: -0.01em;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .subject-footer {
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  justify-content: center;
   gap: var(--space-2);
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+  min-height: 4.5rem;
   margin-top: auto;
+  flex-shrink: 0;
   padding-top: var(--space-2);
   border-top: 1px solid var(--color-border-subtle);
+  box-sizing: border-box;
+}
+
+.subject-footer .badge {
+  white-space: normal;
+  text-align: center;
+  justify-content: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.35;
+  height: auto;
 }
 
 .subject-careers {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
   gap: var(--space-2);
+  width: 100%;
+  min-width: 0;
+  min-height: 4.75rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .subject-career-pill {
@@ -150,6 +250,12 @@
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border-subtle);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .hub-error {
@@ -203,13 +309,80 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 1024px) {
+  .subject-hub .subjects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
   .subject-hub {
     padding: var(--space-8) 0 var(--space-12);
   }
 
+  .hub-header {
+    width: min(80vw, calc(100% - (var(--space-4) * 2)));
+    max-width: min(80vw, calc(100% - (var(--space-4) * 2)));
+  }
+
+  .subject-hub .subjects-grid {
+    gap: var(--space-4);
+    width: min(80vw, calc(100% - (var(--space-4) * 2)));
+    max-width: min(80vw, calc(100% - (var(--space-4) * 2)));
+    grid-template-columns: 1fr;
+  }
+
+  .subject-hub .subjects-grid .subject-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: 100%;
+  }
+
   .subject-card-top {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    min-height: 8rem;
+  }
+
+  .subject-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    font-size: 1.5rem;
+  }
+
+  .subject-name {
+    font-size: var(--text-lg);
+  }
+
+  .subject-desc {
+    font-size: var(--text-xs);
+  }
+
+  .subject-career-teaser {
+    padding: var(--space-3);
+    flex: 0 0 7.5rem;
+    height: 7.5rem;
+    min-height: 7.5rem;
+    max-height: 7.5rem;
+  }
+
+  .subject-footer {
+    min-height: 4.25rem;
+  }
+
+  .subject-careers {
+    min-height: 4.5rem;
+  }
+
+  .subject-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .subject-footer .badge {
+    width: 100%;
   }
 
   .topic-row {

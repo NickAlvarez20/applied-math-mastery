@@ -85,54 +85,61 @@ export default function Navbar() {
               type="button"
               className="navbar-theme-btn"
               onClick={toggleTheme}
-              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              aria-label={
+                theme === "light" ? "Switch to dark mode" : "Switch to light mode"
+              }
               title={theme === "light" ? "Dark mode" : "Light mode"}
             >
               <span className="navbar-theme-icon" aria-hidden>
-                {theme === "light" ? "🌙" : "☀️"}
+                {theme === "light" ? "🌙" : "💡"}
               </span>
               <span className="navbar-theme-label">
-                {theme === "light" ? "Dark" : "Light"}
+                {theme === "light" ? "Dark mode" : "Light mode"}
               </span>
             </button>
 
             {user ? (
-              <div className="navbar-user navbar-user--desktop">
+              <>
+                <div className="navbar-user navbar-user--desktop">
+                  <button
+                    type="button"
+                    className="navbar-avatar"
+                    onClick={() => setUserMenuOpen((o) => !o)}
+                    aria-expanded={userMenuOpen}
+                    aria-haspopup="true"
+                    aria-label={`${user.username} account menu`}
+                  >
+                    {user.username[0].toUpperCase()}
+                  </button>
+                  {userMenuOpen && (
+                    <div className="navbar-dropdown">
+                      <Link
+                        to="/dashboard"
+                        className="navbar-dropdown-item"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <Link
+                        to="/achievements"
+                        className="navbar-dropdown-item"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        Achievements
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
                 <button
                   type="button"
-                  className="navbar-avatar"
-                  onClick={() => setUserMenuOpen((o) => !o)}
-                  aria-expanded={userMenuOpen}
-                  aria-haspopup="true"
+                  className="navbar-logout-btn"
+                  onClick={handleLogout}
+                  aria-label="Log out"
                 >
-                  {user.username[0].toUpperCase()}
+                  Log out
                 </button>
-                {userMenuOpen && (
-                  <div className="navbar-dropdown">
-                    <Link
-                      to="/dashboard"
-                      className="navbar-dropdown-item"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/achievements"
-                      className="navbar-dropdown-item"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      Achievements
-                    </Link>
-                    <button
-                      type="button"
-                      className="navbar-dropdown-item navbar-dropdown-item--danger"
-                      onClick={handleLogout}
-                    >
-                      Log out
-                    </button>
-                  </div>
-                )}
-              </div>
+              </>
             ) : (
               <div className="navbar-auth-btns navbar-auth-btns--desktop">
                 <button

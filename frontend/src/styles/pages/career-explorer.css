@@ -112,6 +112,9 @@
   letter-spacing: -0.02em;
   color: var(--color-text);
   line-height: 1.3;
+  text-align: center;
+  margin: 0;
+  width: 100%;
 }
 
 .career-salaries {

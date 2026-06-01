@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { useUIStore } from "@/store/uiStore";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 // Pages — add these files one by one in Phase 3
 import LandingPage from "@/pages/LandingPage";
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         </main>
+        <Footer />
         <ToastContainer />
         {authModal && (
           <AuthModal
