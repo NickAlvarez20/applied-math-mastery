@@ -4,6 +4,8 @@
   z-index: 200;
   flex-shrink: 0;
   width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
@@ -23,6 +25,7 @@
   margin: 0 auto;
   padding: 0 var(--space-4);
   min-height: 60px;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -31,6 +34,11 @@
 @media (min-width: 640px) {
   .navbar-inner {
     padding: 0 var(--space-6);
+  }
+}
+
+@media (min-width: 900px) {
+  .navbar-inner {
     gap: var(--space-6);
   }
 }
@@ -56,12 +64,23 @@
   font-size: var(--text-xl);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 899px) {
+  .navbar-inner {
+    gap: var(--space-2);
+  }
+
   .navbar-logo {
     font-size: var(--text-sm);
     line-height: 1.2;
     max-width: 9.5rem;
+    min-width: 0;
+    flex-shrink: 1;
     white-space: normal;
+  }
+
+  .navbar-right {
+    gap: var(--space-1);
+    min-width: 0;
   }
 }
 
@@ -109,7 +128,7 @@
   flex-shrink: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   .navbar-right {
     gap: var(--space-3);
   }
@@ -206,6 +225,19 @@
 .navbar-theme-label {
   display: inline;
   white-space: nowrap;
+}
+
+@media (max-width: 899px) {
+  .navbar-theme-label {
+    display: none;
+  }
+
+  .navbar-theme-btn {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    gap: 0;
+  }
 }
 
 .navbar-user {
